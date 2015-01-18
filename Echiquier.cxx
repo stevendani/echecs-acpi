@@ -1,4 +1,4 @@
-/** 
+/**
  * Mise en oeuvre de Echiquier.h
  *
  * @file Echiquier.cxx
@@ -30,7 +30,7 @@ Echiquier::Echiquier()
  * @return 0 si aucune piece n'est sur cette case et un pointeur
  * vers une piece sinon.
  */
-Piece* 
+Piece*
 Echiquier::getPiece( int x, int y )
 {
   if ((x>=1) && (x<=8) && (y>=1) && (y<=8))
@@ -38,7 +38,7 @@ Echiquier::getPiece( int x, int y )
   return NULL;
 }
 
-  
+
 /**
  * Place une piece sur l'echiquier, aux coordonnees specifiees dans la piece.
  *
@@ -47,7 +47,7 @@ Echiquier::getPiece( int x, int y )
  * @return 'true' si le placement s'est bien passe, 'false' sinon
  * (case occupee, coordonnees invalides, piece vide )
  */
-bool 
+bool
 Echiquier::placer( Piece* p )
 {
   if (p==NULL) return false;
@@ -63,7 +63,7 @@ Echiquier::placer( Piece* p )
 
 /**
  * Deplace une piece sur l'echiquier, des coordonnees specifiees
- * dans la piece aux coordonnees x,y. 
+ * dans la piece aux coordonnees x,y.
  *
  * @param p un pointeur vers une piece
  * @param x un entier entre 1 et 8
@@ -73,9 +73,10 @@ Echiquier::placer( Piece* p )
  * (case occupee, coordonnees invalides, piece vide, piece pas
  * presente au bon endroit sur l'echiquier)
  */
-bool 
+bool
 Echiquier::deplacer( Piece* p, int x, int y )
 {
+    return true;
 }
 
 
@@ -88,7 +89,7 @@ Echiquier::deplacer( Piece* p, int x, int y )
  * @return 0 si aucune piece n'est sur cette case et le pointeur
  * vers la piece enlevee sinon.
  */
-Piece* 
+Piece*
 Echiquier::enleverPiece( int x, int y )
 {
   if ((x>=1) && (x<=8) && (y>=1) && (y<=8) && getPiece(x,y)!=NULL)
@@ -117,7 +118,7 @@ Echiquier::affiche()
 	{
 	  char c;
 	  Piece* p = getPiece( x, y );
-	  if ( p == 0 ) 
+	  if ( p == 0 )
 	    c = ( ( x + y ) % 2 ) == 0 ? '#' : '.';
 	  else
 	    c = p->codePiece(); //p->isWhite() ? 'B' : 'N';
@@ -128,5 +129,4 @@ Echiquier::affiche()
   cout << "  12345678" << endl;
 }
 
-  
 

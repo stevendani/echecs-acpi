@@ -1,4 +1,4 @@
-/** 
+/**
  * Header de Joueur.cxx
  *
  * @file Joueur.h
@@ -13,7 +13,7 @@
 
 using namespace std;
 
-class Joueur 
+class Joueur
 {
  protected:
   //Piece m_pieces[16];
@@ -31,6 +31,7 @@ class JoueurBlanc : public Joueur
 {
  public:
   JoueurBlanc();
+  int turn();
 };
 
 class JoueurNoir : public Joueur

@@ -33,7 +33,7 @@ Joueur::Joueur(bool white)
   */
 }
 
-void 
+void
 Joueur::affiche()
 {
   /*
@@ -53,6 +53,9 @@ Joueur::isWhite()
 {
   return m_pieces[0]->isWhite();
 }
+
+
+
 
 void
 Joueur::placerPieces(Echiquier &e)
@@ -78,13 +81,17 @@ JoueurBlanc::JoueurBlanc() //: Joueur(true)
   Fou* fbr = new Fou(true,false);
   Tour* tbl = new Tour(true,true);
   Tour* tbr = new Tour(true,false);
+  Cavalier* cbl = new Cavalier(true,true);
+  Cavalier* cbr = new Cavalier(true,false);
   m_pieces.push_back(rb);
   m_pieces.push_back(qb);
   m_pieces.push_back(fbl);
   m_pieces.push_back(fbr);
   m_pieces.push_back(tbl);
   m_pieces.push_back(tbr);
-  
+  m_pieces.push_back(cbl);
+  m_pieces.push_back(cbr);
+
   for(int i=1; i<=8; i++){
 		Piece* p = new Piece(i, 2, true);
 		m_pieces.push_back(p);
@@ -100,15 +107,79 @@ JoueurNoir::JoueurNoir() //: Joueur(false)
   Fou* fnr = new Fou(false,false);
   Tour* tnl = new Tour(false,true);
   Tour* tnr = new Tour(false,false);
+  Cavalier* cnl = new Cavalier(true,true);
+  Cavalier* cnr = new Cavalier(true,false);
   m_pieces.push_back(rn);
   m_pieces.push_back(qn);
   m_pieces.push_back(fnl);
   m_pieces.push_back(fnr);
   m_pieces.push_back(tnl);
   m_pieces.push_back(tnr);
-  
+  m_pieces.push_back(cnl);
+  m_pieces.push_back(cnr);
+
 for(int i=1; i<=8; i++){
 	Piece* p = new Piece(i, 7, false);
 	m_pieces.push_back(p);
   }
+}
+int
+JoueurBlanc::turn()
+{
+    string choix;
+    char position;
+    string  Pieces[5];
+    Pieces[0]="pion";
+    Pieces[1]="tour";
+    Pieces[2]="cavalier";
+    Pieces[3]="fou";
+    Pieces[4]="Reine";
+    Pieces[5]="Rois";
+    int n;
+    bool x=true;
+    while (x==true)
+    {
+    cout << "Choisir une piece(1-pion,2-tour,3-cavalier,4-fou,5-Reine,6-Rois):";
+    cin >> n;
+    x=false;
+switch (n) {
+
+case 0 :
+    return n;
+	break;
+
+case 1 :
+	choix=Pieces[n-1];
+	break;
+
+case 2 :
+	choix=Pieces[n-1];
+	break;
+case 3 :
+	choix=Pieces[n-1];
+	break;
+
+case 4 :
+	choix=Pieces[n-1];
+	break;
+case 5 :
+	choix=Pieces[n-1];
+	break;
+
+case 6 :
+	choix=Pieces[n-1];
+	break;
+
+default:
+
+	cout << "Mauvais choix" << endl;
+	x=true;
+	break;
+
+}
+}
+    if (n<5) cerr << "pièce " << Pieces[n-1]
+                  << " existe " << m_pieces[1]->getPosition() << endl;
+    else cout << "Vous avez choisi la piece " << Pieces[n-1] << endl;
+    return n;
 }

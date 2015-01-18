@@ -1,4 +1,4 @@
-/** 
+/**
  * Programme test de Piece
  *
  * @file testPiece.cxx
@@ -9,13 +9,13 @@
 #include "Piece.h"
 #include "Joueur.h"
 #include "Echiquier.h"
-
+#include <stdlib.h>
 // Pour utiliser les flux de iostream sans mettre "std::" tout le temps.
 using namespace std;
 
 bool compare(Piece pa, Piece pb)
 {
-  if ( (pa.x()==pb.x()) && (pa.y()==pb.y()) ) 
+  if ( (pa.x()==pb.x()) && (pa.y()==pb.y()) )
     return true;
   return false;
 }
@@ -29,7 +29,7 @@ int main( int argc, char** argv )
   Piece p1;
   // p1 est une piece blanche de coordonnees (3,3)
   p1.init( 3, 3, true );
-  
+
   Piece p2(4,4,false);
 
   // On l'affiche
@@ -57,9 +57,22 @@ int main( int argc, char** argv )
   Echiquier e;
   jb.placerPieces(e);
   jn.placerPieces(e);
+  int n;
+  int i;
+  n=1;
+while (n>0) {
 
+  system("CLS");
+system("color 0F");
   e.affiche();
+  i=jb.turn();
+  if(i==0) n=i;
+system("color F0");
+  e.affiche();
+  i=jb.turn();
+  if(i==0) n=i;
 
+}
   /*
   Roi rb(true);
   rb.affiche();

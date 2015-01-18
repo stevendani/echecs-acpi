@@ -1,4 +1,4 @@
-/** 
+/**
  * Header de Piece.cxx
  *
  * @file Piece.h
@@ -13,13 +13,13 @@ class Echiquier;
 /**
  * Declaration d'une classe modélisant une piece de jeu d'echec.
  */
-class Piece 
+class Piece
 {
 protected:
   int m_x;
   int m_y;
   bool m_white;
-  
+
 public:
   Piece();
   virtual ~Piece();
@@ -33,16 +33,17 @@ public:
   bool isWhite();
   bool isBlack();
   void affiche();
+  char getPosition();
   virtual bool mouvementValide(Echiquier &e, int x, int y);
   virtual char codePiece();
-}; 
+};
 
 class Roi : public Piece
 {
  public:
   Roi(bool white);
   bool mouvementValide(Echiquier &e, int x, int y);
-  char codePiece();  
+  char codePiece();
 };
 
 class Fou : virtual public Piece
@@ -50,7 +51,14 @@ class Fou : virtual public Piece
  public:
   Fou(bool white, bool left);
   bool mouvementValide(Echiquier &e, int x, int y);
-  char codePiece();  
+  char codePiece();
+};
+class Cavalier : virtual public Piece
+{
+ public:
+  Cavalier(bool white, bool left);
+  bool mouvementValide(Echiquier &e, int x, int y);
+  char codePiece();
 };
 
 class Tour : virtual public Piece
@@ -58,7 +66,7 @@ class Tour : virtual public Piece
  public:
   Tour(bool white, bool left);
   bool mouvementValide(Echiquier &e, int x, int y);
-  char codePiece();  
+  char codePiece();
 };
 
 class Reine : public Tour, public Fou
@@ -66,7 +74,7 @@ class Reine : public Tour, public Fou
  public:
   Reine(bool white);
   bool mouvementValide(Echiquier &e, int x, int y);
-  char codePiece();  
+  char codePiece();
 };
 
 #endif // !defined Piece_h

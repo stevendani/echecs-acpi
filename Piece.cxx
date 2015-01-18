@@ -1,4 +1,4 @@
-/** 
+/**
  * Mise en oeuvre de Piece.h
  *
  * @file Piece.cxx
@@ -35,7 +35,7 @@ Piece::operator=(const Piece & autre)
 
 Piece::~Piece()
 {
-  cout << "DEBUG : Destructeur Piece" << endl;
+
 }
 
 Piece::Piece( int x, int y, bool white )
@@ -86,7 +86,7 @@ Piece::isBlack()
   return !m_white;
 }
 
-void 
+void
 Piece::affiche()
 {
   cout << "Piece: x=" << m_x << " y=" << m_y << " "
@@ -105,7 +105,15 @@ Piece::codePiece()
 {
   return (m_white)?'B':'N';
 }
-
+char
+Piece::getPosition()
+{
+    char x;
+    char y;
+    x=m_x;
+    y=m_y;
+  return x+y;
+}
 //==========================================================\\
 
 Roi::Roi(bool white)
@@ -169,6 +177,7 @@ Tour::codePiece()
   return (m_white)?'T':'t';
 }
 
+
 //==========================================================\\
 
 Fou::Fou(bool white, bool left) : Piece(left?3:6, white?1:8,white)
@@ -188,3 +197,22 @@ Fou::codePiece()
 {
   return (m_white)?'F':'f';
 }
+
+Cavalier::Cavalier(bool white, bool left) : Piece(left?2:7, white?1:8,white)
+{
+  cout << "DEBUG : Constructeur Cavalier" << endl;
+}
+
+bool
+Cavalier::mouvementValide(Echiquier &e, int x, int y)
+{
+  cout << "DEBUG : mouvementValide Cavalier" << endl;
+  return false;
+}
+
+char
+Cavalier::codePiece()
+{
+  return (m_white)?'C':'c';
+}
+
