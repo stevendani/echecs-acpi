@@ -107,8 +107,8 @@ JoueurNoir::JoueurNoir() //: Joueur(false)
   Fou* fnr = new Fou(false,false);
   Tour* tnl = new Tour(false,true);
   Tour* tnr = new Tour(false,false);
-  Cavalier* cnl = new Cavalier(true,true);
-  Cavalier* cnr = new Cavalier(true,false);
+  Cavalier* cnl = new Cavalier(false,true);
+  Cavalier* cnr = new Cavalier(false,false);
   m_pieces.push_back(rn);
   m_pieces.push_back(qn);
   m_pieces.push_back(fnl);
@@ -178,7 +178,7 @@ default:
 
 }
 }
-    if (n<5) cerr << "pièce " << Pieces[n-1]
+    if (n<5) cerr << "piï¿½ce " << Pieces[n-1]
                   << " existe " << m_pieces[1]->getPosition() << endl;
     else cout << "Vous avez choisi la piece " << Pieces[n-1] << endl;
     return n;

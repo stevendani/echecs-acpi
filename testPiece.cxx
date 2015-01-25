@@ -62,12 +62,9 @@ int main( int argc, char** argv )
   n=1;
 while (n>0) {
 
-  system("CLS");
-system("color 0F");
   e.affiche();
   i=jb.turn();
   if(i==0) n=i;
-system("color F0");
   e.affiche();
   i=jb.turn();
   if(i==0) n=i;
@@ -102,6 +99,6 @@ system("color F0");
     cout << "cast reussi" << endl;
   */
 
-  // les objets definis dans cette fonction sont automatiquement détruits.
+  // les objets definis dans cette fonction sont automatiquement dï¿½truits.
   // Ex : p1
 }
