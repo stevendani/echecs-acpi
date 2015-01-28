@@ -38,6 +38,8 @@ int main( int argc, char** argv )
 
   string text = e.getPiece(1,2)->mouvementValide(e,1,3)?"mouvement valide":"mouvement non valide";
   cout << text <<endl;
+  e.deplacer(e.getPiece(1,1), 1,3);
+  e.affiche();
 /*while (n>0) {
 
   e.affiche();

@@ -77,6 +77,9 @@ Echiquier::placer( Piece* p )
 bool
 Echiquier::deplacer( Piece* p, int x, int y )
 {
+	enleverPiece(p->x(), p->y());
+	p->move(x,y);
+	m_cases[(x-1)+8*(y-1)]=p;
     return true;
 }
 
