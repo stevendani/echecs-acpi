@@ -239,10 +239,27 @@ Fou::Fou(bool white, bool left) : Piece(left?3:6, white?1:8,white)
 bool
 Fou::mouvementValide(Echiquier &e, int x, int y)
 {
-	cout << "DEBUG : mouvementValide Fou" << endl;
+	cout << "DEBUG : mouvementValide FOU" << endl;
+	if(Piece::mouvementValide(e,x,y)){
+		if((abs(x-m_x))==(abs(y-m_y)) ){
+			cout << "DEBUG : Mouvement possible" << endl;
+			int axeY=min(y,m_y);
+
+			for(int i=min(x,m_x)+1;i<max(x,m_x);i++){
+				axeY++;
+				if(e.getPiece(i,axeY)){
+					cout << "DEBUG : Piece sur la route" << endl;
+					return false;
+				}
+			}
+
+			cout << "DEBUG : Mouvement valide" << endl;
+			return true;
+		}
+	}
+	cout << "DEBUG : Mouvement impossible" << endl;
 	return false;
 }
-
 char
 Fou::codePiece()
 {

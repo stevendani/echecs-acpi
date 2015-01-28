@@ -15,9 +15,9 @@ using namespace std;
 
 bool compare(Piece pa, Piece pb)
 {
-  if ( (pa.x()==pb.x()) && (pa.y()==pb.y()) )
-    return true;
-  return false;
+	if ( (pa.x()==pb.x()) && (pa.y()==pb.y()) )
+		return true;
+	return false;
 }
 
 bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier e){
@@ -42,27 +42,21 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier e){
  */
 int main( int argc, char** argv )
 {
-  JoueurBlanc jb;
-  JoueurNoir jn;
+	JoueurBlanc jb;
+	JoueurNoir jn;
 
-  jb.affiche();
-  jn.affiche();
+	jb.affiche();
+	jn.affiche();
 
-  Echiquier e;
-  jb.placerPieces(e);
-  jn.placerPieces(e);
-  e.affiche();
-
-  /*string text = e.getPiece(1,1)->mouvementValide(e,1,3)?"mouvement valide":"mouvement non valide";
-  cout << text <<endl;
-  e.affiche();*/
-  string enEchec = isJoueurEnEchec(&jn, &jb, e)?"Echec":"Pas echec";
-  cout << enEchec << endl;
-  e.deplacer(e.getPiece(2,1), 4,6);
-  e.affiche();
-  enEchec = isJoueurEnEchec(&jn, &jb, e)?"Echec":"Pas echec";
-  cout << enEchec << endl;
-/*while (n>0) {
+	Echiquier e;
+	jb.placerPieces(e);
+	jn.placerPieces(e);
+	e.affiche();
+e.deplacer(e.getPiece(4,7),4,6);
+	string text = e.getPiece(3,8)->mouvementValide(e,1,6)?"mouvement valide":"mouvement non valide";
+	cout << text <<endl;
+	e.affiche();
+	/*while (n>0) {
 
   e.affiche();
   i=jb.turn();
@@ -72,7 +66,7 @@ int main( int argc, char** argv )
   if(i==0) n=i;
 
 }*/
-  /*
+	/*
   Roi rb(true);
   rb.affiche();
   Roi rn(false);
@@ -99,8 +93,8 @@ int main( int argc, char** argv )
     cout << "cast impossible" << endl;
   else
     cout << "cast reussi" << endl;
-  */
+	 */
 
-  // les objets definis dans cette fonction sont automatiquement d�truits.
-  // Ex : p1
+	// les objets definis dans cette fonction sont automatiquement d�truits.
+	// Ex : p1
 }
