@@ -20,17 +20,17 @@ bool compare(Piece pa, Piece pb)
   return false;
 }
 
-bool isJoueurEnEchec(Joueur joueurToCheck,Joueur attaquant, Echiquier e){
+bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier e){
 	bool ret = false;
-	vector<Piece*> findTheKing = joueurToCheck.getPieces();
+	vector<Piece*> findTheKing = joueurToCheck->getPieces();
 	Piece* roi;
 	for(vector<Piece*>::size_type i=0;i<findTheKing.size();i++){
-		if(findTheKing[i]->codePiece()==(joueurToCheck.isWhite()?'R':'r')){
+		if(findTheKing[i]->codePiece()==(joueurToCheck->isWhite()?'R':'r')){
 			roi = findTheKing[i];
 		}
 	}
-	for(vector<Piece*>::size_type i=0;i<attaquant.getPieces().size();i++){
-		if(attaquant.getPieces()[i]->mouvementValide(e, roi->x(), roi->y())){
+	for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
+		if(attaquant->getPieces()[i]->mouvementValide(e, roi->x(), roi->y())){
 			ret = true;
 		}
 	}
@@ -53,12 +53,15 @@ int main( int argc, char** argv )
   jn.placerPieces(e);
   e.affiche();
 
-  string text = e.getPiece(2,8)->mouvementValide(e,4,7)?"mouvement valide":"mouvement non valide";
+  /*string text = e.getPiece(1,1)->mouvementValide(e,1,3)?"mouvement valide":"mouvement non valide";
   cout << text <<endl;
-  e.deplacer(e.getPiece(1,2), 1,4);
+  e.affiche();*/
+  string enEchec = isJoueurEnEchec(&jn, &jb, e)?"Echec":"Pas echec";
+  cout << enEchec << endl;
+  e.deplacer(e.getPiece(2,1), 4,6);
   e.affiche();
-  text = e.getPiece(1,4)->mouvementValide(e,1,6)?"mouvement valide":"mouvement non valide";
-  cout << text <<endl;
+  enEchec = isJoueurEnEchec(&jn, &jb, e)?"Echec":"Pas echec";
+  cout << enEchec << endl;
 /*while (n>0) {
 
   e.affiche();

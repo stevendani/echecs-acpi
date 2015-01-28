@@ -264,12 +264,6 @@ Cavalier::mouvementValide(Echiquier &e, int x, int y)
 	cout << "DEBUG : mouvementValide Cavalier" << endl;
 	if(Piece::mouvementValide(e,x,y)){
 		if(((abs(x-m_x)<=2) && (abs(y-m_y)<=1))||((abs(x-m_x)<=1)&& (abs(x-m_x)<=2))){
-			cout << "DEBUG : Mouvement possible" << endl;
-			if(e.getPiece(x, y)){
-				cout << "DEBUG : Piece sur la route" << endl;
-				return false;
-			}
-
 			cout << "DEBUG : Mouvement valide" << endl;
 			return true;
 		}
@@ -293,28 +287,30 @@ Pion::Pion(bool white, int pos) : Piece(pos, white?2:7,white)
 	cout << "DEBUG : Constructeur Cavalier" << endl;
 }
 
-
 bool
-Cavalier::mouvementValide(Echiquier &e, int x, int y)
+Pion::mouvementValide(Echiquier &e, int x, int y)
 {
-	cout << "DEBUG : mouvementValide Cavalier" << endl;
+	cout << "DEBUG : mouvementValide Pion" << endl;
 	if(Piece::mouvementValide(e,x,y)){
-		if(((abs(x-m_x)<=2) && (abs(y-m_y)<=1))||((abs(x-m_x)<=1)&& (abs(x-m_x)<=2))){
+		if((m_white && y == 4 && m_y==2 && e.getPiece(m_x, 3)==NULL) || ((!m_white) && y == 5 && m_y==7 && e.getPiece(m_x, 6)==NULL)){
+			cout << "DEBUG : déplacement de deux cases ok" << endl;
+			return true;
+		} else if((m_white && y == m_y+1 && abs(x-m_x)<=1) || ((!m_white) && y == m_y-1 && abs(x-m_x)<=1)){
 			cout << "DEBUG : Mouvement possible" << endl;
-			if(e.getPiece(x, y)){
-                    if(e.getPiece(x,y)->isWhite() != m_white){
+			if(abs(x-m_x)==1){
+				cout << "DEBUG : Déplacement diagonal" << endl;
+				if(e.getPiece(x,y)!= NULL){
+					cout << "DEBUG : Piece présente en diagonale" << endl;
+					if(e.getPiece(x,y)->isWhite() != m_white){
 						cout << "DEBUG : Piece mangeable => déplacement ok" << endl;
 						return true;
-					}else{
-                        cout << "DEBUG : Piece sur la route" << endl;
-                        return false;
-                        }
+					}
+				}
+				return false;
 			}
-			cout << "DEBUG : Mouvement valide" << endl;
-			return true;
+			if(e.getPiece(x,y)==NULL){return true;}
 		}
 	}
-	cout << "DEBUG : Mouvement impossible" << endl;
 	return false;
 }
 
