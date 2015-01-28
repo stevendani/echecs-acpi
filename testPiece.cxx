@@ -25,29 +25,6 @@ bool compare(Piece pa, Piece pb)
  */
 int main( int argc, char** argv )
 {
-  // instancie un objet p1 de type Piece
-  Piece p1;
-  // p1 est une piece blanche de coordonnees (3,3)
-  p1.init( 3, 3, true );
-
-  Piece p2(4,4,false);
-
-  // On l'affiche
-  p1.affiche();
-  p2.affiche();
-
-  Piece p3=p1;
-  p1=p2;
-
-  if (compare(p1,p2))
-    cout << "memes positions" << endl;
-  else
-    cout << "differentes positions" << endl;
-
-  //Piece tbl[4];
-
-  //Joueur jb(true);
-  //Joueur jn(false);
   JoueurBlanc jb;
   JoueurNoir jn;
 
@@ -57,10 +34,11 @@ int main( int argc, char** argv )
   Echiquier e;
   jb.placerPieces(e);
   jn.placerPieces(e);
-  int n;
-  int i;
-  n=1;
-while (n>0) {
+  e.affiche();
+
+  string text = e.getPiece(1,1)->mouvementValide(e,1,2)?"mouvement valide":"mouvement non valide";
+  cout << text <<endl;
+/*while (n>0) {
 
   e.affiche();
   i=jb.turn();
@@ -69,7 +47,7 @@ while (n>0) {
   i=jb.turn();
   if(i==0) n=i;
 
-}
+}*/
   /*
   Roi rb(true);
   rb.affiche();

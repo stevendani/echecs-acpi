@@ -7,12 +7,13 @@
 #include <iostream>
 // A besoin de la declaration de la classe
 #include "Echiquier.h"
+#include "Piece.h"
 
 using namespace std;
 
 /**
- * Constructeur par défaut.
- * Initialise à vide l'echiquier.
+ * Constructeur par dï¿½faut.
+ * Initialise ï¿½ vide l'echiquier.
  */
 Echiquier::Echiquier()
 {
@@ -110,7 +111,7 @@ Echiquier::enleverPiece( int x, int y )
 void
 Echiquier::affiche()
 {
-  cout << endl << "  12345678" << endl;
+  cout << endl << "  ABCDEFGH" << endl;
   for ( int y = 1; y <= 8; ++y )
     {
       cout << y << " ";
@@ -126,7 +127,7 @@ Echiquier::affiche()
 	}
       cout << " " << y << endl;
     }
-  cout << "  12345678" << endl;
+  cout << "  ABCDEFGH" << endl;
 }
 
 

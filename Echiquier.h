@@ -7,10 +7,11 @@
 #if !defined Echiquier_h
 #define Echiquier_h
 
-#include "Piece.h"
+//#include "Piece.h"
+class Piece;
 
 /**
- * Declaration d'une classe modélisant une piece de jeu d'echec.
+ * Declaration d'une classe modï¿½lisant une piece de jeu d'echec.
  */
 class Echiquier 
 {
@@ -23,8 +24,8 @@ private:
 public:
 
   /**
-   * Constructeur par défaut.
-   * Initialise à vide l'echiquier.
+   * Constructeur par dï¿½faut.
+   * Initialise ï¿½ vide l'echiquier.
    */
   Echiquier();
 
