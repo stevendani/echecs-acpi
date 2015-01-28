@@ -299,10 +299,7 @@ Pion::mouvementValide(Echiquier &e, int x, int y)
 {
 	cout << "DEBUG : mouvementValide Pion" << endl;
 	if(Piece::mouvementValide(e,x,y)){
-		if(m_white && y == 4 && m_y==2 && e.getPiece(m_x, 3)==NULL){
-			cout << "DEBUG : déplacement de deux cases ok" << endl;
-			return true;
-		} else if ((!m_white) && y == 5 && m_y==7 && e.getPiece(m_x, 6)==NULL){
+		if((m_white && y == 4 && m_y==2 && e.getPiece(m_x, 3)==NULL) || ((!m_white) && y == 5 && m_y==7 && e.getPiece(m_x, 6)==NULL)){
 			cout << "DEBUG : déplacement de deux cases ok" << endl;
 			return true;
 		} else if((m_white && y == m_y+1 && abs(x-m_x)<=1) || ((!m_white) && y == m_y-1 && abs(x-m_x)<=1)){

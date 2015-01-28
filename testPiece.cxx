@@ -20,6 +20,23 @@ bool compare(Piece pa, Piece pb)
   return false;
 }
 
+bool isJoueurEnEchec(Joueur joueurToCheck,Joueur attaquant, Echiquier e){
+	bool ret = false;
+	vector<Piece*> findTheKing = joueurToCheck.getPieces();
+	Piece* roi;
+	for(vector<Piece*>::size_type i=0;i<findTheKing.size();i++){
+		if(findTheKing[i]->codePiece()==(joueurToCheck.isWhite()?'R':'r')){
+			roi = findTheKing[i];
+		}
+	}
+	for(vector<Piece*>::size_type i=0;i<attaquant.getPieces().size();i++){
+		if(attaquant.getPieces()[i]->mouvementValide(e, roi->x(), roi->y())){
+			ret = true;
+		}
+	}
+	return ret;
+}
+
 /**
  * Programme principal
  */

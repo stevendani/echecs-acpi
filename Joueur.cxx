@@ -54,7 +54,10 @@ Joueur::isWhite()
 	return m_pieces[0]->isWhite();
 }
 
-
+vector<Piece*>
+Joueur::getPieces(){
+	return m_pieces;
+}
 
 
 void
