@@ -4,9 +4,9 @@
  * @file Piece.cxx
  */
 
-// A besoin de la declaration de la classe
 #include <stdlib.h>
 #include <iostream>
+// A besoin de la declaration de la classe
 #include "Piece.h"
 #include "Echiquier.h"
 
@@ -273,17 +273,36 @@ Cavalier::codePiece()
 
 //=====FIN CAVALIER=====\\
 //==========================================================\\
-//=====CAVALIER=====\\
+//=====PION=====\\
 
 Pion::Pion(bool white, int pos) : Piece(pos, white?2:7,white)
 {
 	cout << "DEBUG : Constructeur Cavalier" << endl;
 }
 
+
+//TODO : cas particulier du premier déplacement 2 cases en avant
 bool
 Pion::mouvementValide(Echiquier &e, int x, int y)
 {
 	cout << "DEBUG : mouvementValide Pion" << endl;
+	if(Piece::mouvementValide(e,x,y)){
+		if((m_white && y == m_y+1 && abs(x-m_x)<=1) || ((!m_white) && y == m_y-1 && abs(x-m_x)<=1)){
+			cout << "DEBUG : Mouvement possible" << endl;
+			if(abs(x-m_x)==1){
+				cout << "DEBUG : Déplacement diagonal" << endl;
+				if(e.getPiece(x,y)!= NULL){
+					cout << "DEBUG : Piece présente en diagonale" << endl;
+					if(e.getPiece(x,y)->isWhite() != m_white){
+						cout << "DEBUG : Piece mangeable => déplacement ok" << endl;
+						return true;
+					}
+				}
+				return false;
+			}
+			return true;
+		}
+	}
 	return false;
 }
 
@@ -293,6 +312,6 @@ Pion::codePiece()
 	return (m_white)?'P':'p';
 }
 
-//=====FIN CAVALIER=====\\
+//=====FIN PION=====\\
 //==========================================================\\
 

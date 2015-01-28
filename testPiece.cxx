@@ -36,7 +36,7 @@ int main( int argc, char** argv )
   jn.placerPieces(e);
   e.affiche();
 
-  string text = e.getPiece(1,1)->mouvementValide(e,1,2)?"mouvement valide":"mouvement non valide";
+  string text = e.getPiece(1,2)->mouvementValide(e,1,3)?"mouvement valide":"mouvement non valide";
   cout << text <<endl;
 /*while (n>0) {
 
