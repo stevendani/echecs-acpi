@@ -263,9 +263,8 @@ Cavalier::mouvementValide(Echiquier &e, int x, int y)
 {
 	cout << "DEBUG : mouvementValide Cavalier" << endl;
 	if(Piece::mouvementValide(e,x,y)){
-		if((x == m_x+1 && y == m_y+2)||(x == m_x+2 && y == m_y+1)||(x == m_x-1 && y == m_y-2)||(x == m_x-2 && y == m_y-1)||(x == m_x-1 && y == m_y+2)||(x == m_x-2 && y == m_y+1)||(x == m_x+1 && y == m_y+2)||(x == m_x+2 && y == m_y-1)){
+		if((abs(x-m_x)<=2) && (abs(y-m_y)<=1)||((abs(x-m_x)<=1)&& (abs(x-m_x)<=2))){
 			cout << "DEBUG : Mouvement possible" << endl;
-
 			if(e.getPiece(x, y)){
 				cout << "DEBUG : Piece sur la route" << endl;
 				return false;
