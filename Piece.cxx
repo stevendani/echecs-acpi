@@ -281,13 +281,18 @@ Pion::Pion(bool white, int pos) : Piece(pos, white?2:7,white)
 }
 
 
-//TODO : cas particulier du premier déplacement 2 cases en avant
 bool
 Pion::mouvementValide(Echiquier &e, int x, int y)
 {
 	cout << "DEBUG : mouvementValide Pion" << endl;
 	if(Piece::mouvementValide(e,x,y)){
-		if((m_white && y == m_y+1 && abs(x-m_x)<=1) || ((!m_white) && y == m_y-1 && abs(x-m_x)<=1)){
+		if(m_white && y == 4 && m_y==2 && e.getPiece(m_x, 3)==NULL){
+			cout << "DEBUG : déplacement de deux cases ok" << endl;
+			return true;
+		} else if ((!m_white) && y == 5 && m_y==7 && e.getPiece(m_x, 6)==NULL){
+			cout << "DEBUG : déplacement de deux cases ok" << endl;
+			return true;
+		} else if((m_white && y == m_y+1 && abs(x-m_x)<=1) || ((!m_white) && y == m_y-1 && abs(x-m_x)<=1)){
 			cout << "DEBUG : Mouvement possible" << endl;
 			if(abs(x-m_x)==1){
 				cout << "DEBUG : Déplacement diagonal" << endl;
@@ -300,7 +305,7 @@ Pion::mouvementValide(Echiquier &e, int x, int y)
 				}
 				return false;
 			}
-			return true;
+			if(e.getPiece(x,y)==NULL){return true;}
 		}
 	}
 	return false;
