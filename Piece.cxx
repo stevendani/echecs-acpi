@@ -261,21 +261,21 @@ Cavalier::Cavalier(bool white, bool left) : Piece(left?2:7, white?1:8,white)
 bool
 Cavalier::mouvementValide(Echiquier &e, int x, int y)
 {
-cout << "DEBUG : mouvementValide Cavalier" << endl;
+	cout << "DEBUG : mouvementValide Cavalier" << endl;
 	if(Piece::mouvementValide(e,x,y)){
 		if((x == m_x+1 && y == m_y+2)||(x == m_x+2 && y == m_y+1)||(x == m_x-1 && y == m_y-2)||(x == m_x-2 && y == m_y-1)||(x == m_x-1 && y == m_y+2)||(x == m_x-2 && y == m_y+1)||(x == m_x+1 && y == m_y+2)||(x == m_x+2 && y == m_y-1)){
 			cout << "DEBUG : Mouvement possible" << endl;
 
-					if(e.getPiece(x, y)){
-						cout << "DEBUG : Piece sur la route" << endl;
-						return false;
-					}
-
-				cout << "DEBUG : Mouvement valide" << endl;
-				return true;
+			if(e.getPiece(x, y)){
+				cout << "DEBUG : Piece sur la route" << endl;
+				return false;
 			}
+
+			cout << "DEBUG : Mouvement valide" << endl;
+			return true;
 		}
-		cout << "DEBUG : Mouvement impossible" << endl;
+	}
+	cout << "DEBUG : Mouvement impossible" << endl;
 	return false;
 }
 
