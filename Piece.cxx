@@ -102,7 +102,7 @@ Piece::mouvementValide(Echiquier &e, int x, int y)
 	if(x>=1 && x<=8 && y>=1 && y<=8){
 		cout << "DEBUG : Dans l'echiquier" << endl;
 		if(e.getPiece(x,y)){
-			if(e.getPiece(x,y)->m_white){
+			if(e.getPiece(x,y)->m_white == m_white){
 				cout << "DEBUG : Case déjà occupée par une piece de la même couleur" << endl;
 				return false;
 			}
