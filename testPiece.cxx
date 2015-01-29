@@ -19,13 +19,14 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	cout<<"DEBUG:debut isJoueurEnEchec"<<endl;
 	bool ret = false;
 	vector<Piece*> findTheKing = joueurToCheck->getPieces();
-	Piece* roi;
+	Piece* roi=NULL;
 	for(vector<Piece*>::size_type i=0;i<findTheKing.size();i++){
 		if(findTheKing[i]->codePiece()==(joueurToCheck->isWhite()?'R':'r')){
 			roi = findTheKing[i];
+			cout<<"DEBUG:roi trouvé"<<endl;
 		}
 	}
-	cout<<"DEBUG:roi trouvé"<<endl;
+	if (roi==NULL){return false;}
 	for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
 		if(attaquant->getPieces()[i]->mouvementValide(e, roi->x(), roi->y())){
 			ret = true;
@@ -87,7 +88,12 @@ int main( int argc, char** argv )
 	cout<<text<<endl;
 	e.deplacer(e.getPiece(2,1),4,6);
 	e.affiche();
-	text=isJoueurMAT(&jb, &jn,&e)?"MAT":"Pas MAT";
+	text=isJoueurMAT(&jn, &jb,&e)?"MAT":"Pas MAT";
+	cout<<text<<endl;
+	jn.enleverPiece(e.getPiece(5,8));
+	e.deplacer(e.getPiece(5,1),5,8);
+	e.affiche();
+	text=isJoueurMAT(&jn, &jb,&e)?"MAT":"Pas MAT";
 	cout<<text<<endl;
 	/*while (n>0) {
 
