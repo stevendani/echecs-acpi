@@ -13,14 +13,10 @@
 // Pour utiliser les flux de iostream sans mettre "std::" tout le temps.
 using namespace std;
 
-bool compare(Piece pa, Piece pb)
-{
-	if ( (pa.x()==pb.x()) && (pa.y()==pb.y()) )
-		return true;
-	return false;
-}
 
-bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier e){
+
+bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
+	cout<<"DEBUG:debut isJoueurEnEchec"<<endl;
 	bool ret = false;
 	vector<Piece*> findTheKing = joueurToCheck->getPieces();
 	Piece* roi;
@@ -29,14 +25,47 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier e){
 			roi = findTheKing[i];
 		}
 	}
+	cout<<"DEBUG:roi trouvé"<<endl;
 	for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
 		if(attaquant->getPieces()[i]->mouvementValide(e, roi->x(), roi->y())){
 			ret = true;
 		}
 	}
+	cout<<"DEBUG:fin isJoueurEchec"<<endl;
 	return ret;
 }
 
+bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
+	int cpt=0;
+	vector<Piece*> findTheKing = joueurToCheck->getPieces();
+	Piece* roi;
+	cout<<"DEBUG:debut isJoueurMat"<<endl;
+	if(isJoueurEnEchec(joueurToCheck, attaquant,e))
+	{
+		cout<<"DEBUG:joueur en echec"<<endl;
+		for(vector<Piece*>::size_type i=0;i<findTheKing.size();i++){
+			if(findTheKing[i]->codePiece()==(joueurToCheck->isWhite()?'R':'r')){
+				roi = findTheKing[i];
+			}
+		}
+		vector<Piece*> pieces=attaquant->getPieces();
+		for(vector<Piece*>::size_type i=0;i<pieces.size();i++){
+			vector<int*> mouvements=pieces[i]->getMouvementsPossibles(e);
+			vector<int*> posRoi=roi->getMouvementsPossibles(e);
+			for(vector<int*>::size_type k=0; k<posRoi.size();k++){
+				bool isEnEchec=false;
+				for (vector<int*>::size_type j=0; j<mouvements.size();j++){
+					if(posRoi[k][0]==mouvements[j][0] && posRoi[k][1]==mouvements[j][1]){
+						isEnEchec=true;
+					}
+				}
+				if(isEnEchec){cpt++;}
+			}
+		}
+
+	}
+	return cpt==roi->getMouvementsPossibles(e).size() && isJoueurEnEchec(joueurToCheck,attaquant,e);
+}
 /**
  * Programme principal
  */
@@ -52,10 +81,8 @@ int main( int argc, char** argv )
 	jb.placerPieces(e);
 	jn.placerPieces(e);
 	e.affiche();
-e.deplacer(e.getPiece(4,7),4,6);
-	string text = e.getPiece(3,8)->mouvementValide(e,1,6)?"mouvement valide":"mouvement non valide";
-	cout << text <<endl;
-	e.affiche();
+	string text=isJoueurMAT(&jb, &jn,&e)?"MAT":"Pas MAT";
+	cout<<text<<endl;
 	/*while (n>0) {
 
   e.affiche();

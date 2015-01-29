@@ -3,10 +3,10 @@
  *
  * @file Piece.h
  */
-
 #if !defined Piece_h
 #define Piece_h
-
+#include <vector>
+using namespace std;
 //#include "Echiquier.h"
 class Echiquier;
 
@@ -34,7 +34,8 @@ public:
   bool isBlack();
   void affiche();
   char getPosition();
-  virtual bool mouvementValide(Echiquier &e, int x, int y);
+  virtual bool mouvementValide(Echiquier* e, int x, int y);
+  virtual vector<int*> getMouvementsPossibles(Echiquier* e)=0;
   virtual char codePiece();
 };
 
@@ -42,7 +43,8 @@ class Roi : public Piece
 {
  public:
   Roi(bool white);
-  bool mouvementValide(Echiquier &e, int x, int y);
+  bool mouvementValide(Echiquier* e, int x, int y);
+  vector<int*> getMouvementsPossibles(Echiquier* e);
   char codePiece();
 };
 
@@ -50,7 +52,8 @@ class Fou : virtual public Piece
 {
  public:
   Fou(bool white, bool left);
-  bool mouvementValide(Echiquier &e, int x, int y);
+  bool mouvementValide(Echiquier* e, int x, int y);
+  vector<int*> getMouvementsPossibles(Echiquier* e);
   char codePiece();
 };
 
@@ -58,7 +61,8 @@ class Cavalier : virtual public Piece
 {
  public:
   Cavalier(bool white, bool left);
-  bool mouvementValide(Echiquier &e, int x, int y);
+  bool mouvementValide(Echiquier* e, int x, int y);
+  vector<int*> getMouvementsPossibles(Echiquier* e);
   char codePiece();
 };
 
@@ -66,7 +70,8 @@ class Tour : virtual public Piece
 {
  public:
   Tour(bool white, bool left);
-  bool mouvementValide(Echiquier &e, int x, int y);
+  bool mouvementValide(Echiquier* e, int x, int y);
+  vector<int*> getMouvementsPossibles(Echiquier* e);
   char codePiece();
 };
 
@@ -74,7 +79,8 @@ class Pion : virtual public Piece
 {
  public:
   Pion(bool white, int pos);
-  bool mouvementValide(Echiquier &e, int x, int y);
+  bool mouvementValide(Echiquier* e, int x, int y);
+  vector<int*> getMouvementsPossibles(Echiquier* e);
   char codePiece();
 };
 
@@ -82,7 +88,8 @@ class Reine : public Tour, public Fou
 {
  public:
   Reine(bool white);
-  bool mouvementValide(Echiquier &e, int x, int y);
+  bool mouvementValide(Echiquier* e, int x, int y);
+  vector<int*> getMouvementsPossibles(Echiquier* e);
   char codePiece();
 };
 
