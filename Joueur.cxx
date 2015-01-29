@@ -19,6 +19,15 @@ Joueur::~Joueur()
 	cout << "DEBUG : Destructeur Joueur" << endl;
 }
 
+void
+Joueur::enleverPiece(Piece* piece){
+	for(vector<Piece*>::size_type i=0;i<m_pieces.size();i++){
+		if(m_pieces[i] == piece){
+			m_pieces.erase(m_pieces.begin()+i);
+		}
+	}
+}
+
 Joueur::Joueur(bool white)
 {
 	/*

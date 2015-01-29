@@ -24,6 +24,7 @@ class Joueur
   ~Joueur();
   void affiche();
   bool isWhite();
+  void enleverPiece(Piece* piece);
   vector<Piece*> getPieces();
   void placerPieces(Echiquier &e);
 };
