@@ -13,13 +13,6 @@
 // Pour utiliser les flux de iostream sans mettre "std::" tout le temps.
 using namespace std;
 
-bool compare(Piece pa, Piece pb)
-{
-	if ( (pa.x()==pb.x()) && (pa.y()==pb.y()) )
-		return true;
-	return false;
-}
-
 bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier e){
 	bool ret = false;
 	vector<Piece*> findTheKing = joueurToCheck->getPieces();
