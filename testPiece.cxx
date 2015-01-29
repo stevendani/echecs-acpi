@@ -36,6 +36,7 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 }
 
 bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
+	bool ret =false;
 	int cpt=0;
 	vector<Piece*> findTheKing = joueurToCheck->getPieces();
 	Piece* roi;
@@ -62,9 +63,10 @@ bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 				if(isEnEchec){cpt++;}
 			}
 		}
-
+		cout<<cpt<<endl<<roi->getMouvementsPossibles(e).size()<<endl;
+		ret=(cpt>=roi->getMouvementsPossibles(e).size());
 	}
-	return cpt==roi->getMouvementsPossibles(e).size() && isJoueurEnEchec(joueurToCheck,attaquant,e);
+	return ret;
 }
 /**
  * Programme principal
@@ -82,6 +84,10 @@ int main( int argc, char** argv )
 	jn.placerPieces(e);
 	e.affiche();
 	string text=isJoueurMAT(&jb, &jn,&e)?"MAT":"Pas MAT";
+	cout<<text<<endl;
+	e.deplacer(e.getPiece(2,1),4,6);
+	e.affiche();
+	text=isJoueurMAT(&jb, &jn,&e)?"MAT":"Pas MAT";
 	cout<<text<<endl;
 	/*while (n>0) {
 
