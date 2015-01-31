@@ -52,13 +52,18 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	for(vector<Piece*>::size_type i=0;i<findTheKing.size();i++){
 		if(findTheKing[i]->codePiece()==(joueurToCheck->isWhite()?'R':'r')){
 			roi = findTheKing[i];
-			cout<<"DEBUG:roi trouvÃ©"<<endl;
+			cout<<"DEBUG:roi trouvÃ©"<<endl<< roi->x() << endl << roi->y() << endl;
 		}
 	}
 	if (roi==NULL){return false;}
 	for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
 		if(attaquant->getPieces()[i]->mouvementValide(e, roi->x(), roi->y())){
 			ret = true;
+			vector<int*> mouvements=attaquant->getPieces()[i]->getMouvementsPossibles(e);
+			cout<<"DEBUG:piece mettant en echec trouvÃ©"<<endl<< attaquant->getPieces()[i]->x() << endl << attaquant->getPieces()[i]->y() << endl;
+			for (vector<int*>::size_type j=0; j<mouvements.size();j++){
+									cout<< mouvements[j][0] <<endl<<mouvements[j][1]<<endl;
+							}
 		}
 	}
 	cout<<"DEBUG:fin isJoueurEchec"<<endl;
@@ -103,6 +108,7 @@ tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	bool selection=false;
 	int* coord;
 	string coordonnee;
+	e->affiche();
 	while(!selection){
 		cout << "entrée coordonnée piece" << endl;
 		cin >> coordonnee;
@@ -119,6 +125,7 @@ tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 			cout << "pas de piece au coordonnee " << endl << coord[0] << endl << coord[1] << endl;
 		}
 	}
+	e->affiche();
 	bool mouvement=false;
 	while(!mouvement){
 		cout << "entrée nouvelle coordonnée piece" << endl;
@@ -138,7 +145,6 @@ tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 			cout << "depalcement impossible " << endl << coord2[0] << endl << coord2[1] << endl;
 		}
 	}
-	e->affiche();
 	return false;
 }
 /**
@@ -156,44 +162,15 @@ int main( int argc, char** argv )
 	jb.placerPieces(e);
 	jn.placerPieces(e);
 	e.affiche();
-	string text=isJoueurMAT(&jb, &jn,&e)?"MAT":"Pas MAT";
-	cout<<text<<endl;
-	e.deplacer(e.getPiece(2,1),4,6);
-	e.affiche();
-	text=isJoueurMAT(&jn, &jb,&e)?"MAT":"Pas MAT";
-	cout<<text<<endl;
-	jn.enleverPiece(e.getPiece(5,8));
-	e.deplacer(e.getPiece(5,1),5,8);
-	e.affiche();
-	text=isJoueurMAT(&jn, &jb,&e)?"MAT":"Pas MAT";
-	cout<<text<<endl;
-	text=isCoordonneeValide("A1")?"ok":"nope";
-	cout<<text<<endl;
-	text=isCoordonneeValide("11")?"ok":"nope";
-	cout<<text<<endl;
-	text=isCoordonneeValide("1A")?"ok":"nope";
-	cout<<text<<endl;
-	text=isCoordonneeValide("A1a")?"ok":"nope";
-	cout<<text<<endl;
-	text=isCoordonneeValide("a1")?"ok":"nope";
-	cout<<text<<endl;
-	text=isCoordonneeValide("i1")?"ok":"nope";
-	cout<<text<<endl;
-	text=isCoordonneeValide("a0")?"ok":"nope";
-	cout<<text<<endl;
-	text=isCoordonneeValide("a10")?"ok":"nope";
-	cout<<text<<endl;
-	int* coord = convertCoordonnees("b6");
-	cout << coord[0] << endl << coord[1] << endl;
 	bool partie =true;
 	while (partie){
+		partie=true;
 		cout <<"tour joueur blanc" << endl ;
 		if (!isJoueurMAT(&jb, &jn,&e)){
 			tour(&jb, &jn,&e);
 		}else{
 			partie=false;
 		}
-
 		cout <<"tour joueur noire" << endl ;
 		if(partie){
 			if (!isJoueurMAT(&jn, &jb,&e)){
