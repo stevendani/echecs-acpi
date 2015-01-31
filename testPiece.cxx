@@ -32,10 +32,12 @@ int* convertCoordonnees(string text){
 }
 
 bool isCoordonneeValide(string text){
+	cout << "DEBUG : debut verif"<<endl;
 	if(text.size()==2){
 		cout << "DEBUG : taille ok"<<endl;
 		text[0] = ::toupper(text[0]);
 		if(text[0]>='A' && text[0]<='H' && text[1]>='1' && text[1]<='8'){
+			cout << "DEBUG : dimension ok"<<endl;
 			return true;
 		}
 	}
@@ -96,6 +98,49 @@ bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	}
 	return ret;
 }
+bool
+tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
+	bool selection=false;
+	int* coord;
+	string coordonnee;
+	while(!selection){
+		cout << "entrée coordonnée piece" << endl;
+		cin >> coordonnee;
+		while(!isCoordonneeValide(coordonnee)){
+			cout << "coordonee non valide" << endl;
+			cout << "entrée coordonnée piece" << endl;
+			cin >> coordonnee;
+		}
+		coord = convertCoordonnees(coordonnee);
+		if (e->getPiece(coord[0],coord[1])!= NULL && (e->getPiece(coord[0],coord[1])->isWhite()==joueurToCheck->isWhite())){
+			selection=true;
+			cout << coord[0] << endl << coord[1] << endl;
+		}else{
+			cout << "pas de piece au coordonnee " << endl << coord[0] << endl << coord[1] << endl;
+		}
+	}
+	bool mouvement=false;
+		while(!mouvement){
+			cout << "entrée nouvelle coordonnée piece" << endl;
+
+			cin >> coordonnee;
+			while(!isCoordonneeValide(coordonnee)){
+				cout << "coordonee non valide" << endl;
+				cout << "entrée coordonnée piece" << endl;
+				cin >> coordonnee;
+			}
+			int* coord2 = convertCoordonnees(coordonnee);
+			if (e->getPiece(coord[0],coord[1])->mouvementValide(e,coord2[0],coord2[1])){
+				mouvement=true;
+				e->deplacer(e->getPiece(coord[0],coord[1]), coord2[0],coord2[1]);
+				cout << "depalcement effectuer " << endl;
+			}else{
+				cout << "depalcement impossible " << endl << coord2[0] << endl << coord2[1] << endl;
+			}
+		}
+		e->affiche();
+	return false;
+}
 /**
  * Programme principal
  */
@@ -140,6 +185,24 @@ int main( int argc, char** argv )
 	cout<<text<<endl;
 	int* coord = convertCoordonnees("b6");
 	cout << coord[0] << endl << coord[1] << endl;
+	bool partie =true;
+	while (partie){
+		cout <<"tour joueur blanc" << endl ;
+		if (!isJoueurMAT(&jb, &jn,&e)){
+			tour(&jb, &jn,&e);
+		}else{
+			partie=false;
+		}
+
+		cout <<"tour joueur noire" << endl ;
+		if(partie){
+			if (!isJoueurMAT(&jn, &jb,&e)){
+				tour(&jn, &jb,&e);
+			}else{
+				partie=false;
+			}
+		}
+	}
 
 
 	/*while (n>0) {
