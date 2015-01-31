@@ -120,25 +120,25 @@ tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 		}
 	}
 	bool mouvement=false;
-		while(!mouvement){
-			cout << "entrée nouvelle coordonnée piece" << endl;
+	while(!mouvement){
+		cout << "entrée nouvelle coordonnée piece" << endl;
 
+		cin >> coordonnee;
+		while(!isCoordonneeValide(coordonnee)){
+			cout << "coordonee non valide" << endl;
+			cout << "entrée coordonnée piece" << endl;
 			cin >> coordonnee;
-			while(!isCoordonneeValide(coordonnee)){
-				cout << "coordonee non valide" << endl;
-				cout << "entrée coordonnée piece" << endl;
-				cin >> coordonnee;
-			}
-			int* coord2 = convertCoordonnees(coordonnee);
-			if (e->getPiece(coord[0],coord[1])->mouvementValide(e,coord2[0],coord2[1])){
-				mouvement=true;
-				e->deplacer(e->getPiece(coord[0],coord[1]), coord2[0],coord2[1]);
-				cout << "depalcement effectuer " << endl;
-			}else{
-				cout << "depalcement impossible " << endl << coord2[0] << endl << coord2[1] << endl;
-			}
 		}
-		e->affiche();
+		int* coord2 = convertCoordonnees(coordonnee);
+		if (e->getPiece(coord[0],coord[1])->mouvementValide(e,coord2[0],coord2[1])){
+			mouvement=true;
+			deplacer(e->getPiece(coord[0],coord[1]),joueurToCheck, e, coord2[0],coord2[1]);
+			cout << "depalcement effectuer " << endl;
+		}else{
+			cout << "depalcement impossible " << endl << coord2[0] << endl << coord2[1] << endl;
+		}
+	}
+	e->affiche();
 	return false;
 }
 /**
