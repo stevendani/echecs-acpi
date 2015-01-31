@@ -13,7 +13,34 @@
 // Pour utiliser les flux de iostream sans mettre "std::" tout le temps.
 using namespace std;
 
+bool deplacer(Piece* p, Joueur* opponent, Echiquier* e, int x, int y){
+	if(p->mouvementValide(e,x,y)){
+		if(e->getPiece(x,y)!=NULL){
+			opponent->enleverPiece(e->getPiece(x,y));
+		}
+		e->deplacer(p,x,y);
+		return true;
+	}
+	return false;
+}
 
+int* convertCoordonnees(string text){
+	int* tab = new int[2];
+	tab[0] = ::toupper(text[0]) -64;
+	tab[1] = text[1] -48;
+	return tab;
+}
+
+bool isCoordonneeValide(string text){
+	if(text.size()==2){
+		cout << "DEBUG : taille ok"<<endl;
+		text[0] = ::toupper(text[0]);
+		if(text[0]>='A' && text[0]<='H' && text[1]>='1' && text[1]<='8'){
+			return true;
+		}
+	}
+	return false;
+}
 
 bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	cout<<"DEBUG:debut isJoueurEnEchec"<<endl;
@@ -23,7 +50,7 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	for(vector<Piece*>::size_type i=0;i<findTheKing.size();i++){
 		if(findTheKing[i]->codePiece()==(joueurToCheck->isWhite()?'R':'r')){
 			roi = findTheKing[i];
-			cout<<"DEBUG:roi trouvé"<<endl;
+			cout<<"DEBUG:roi trouvÃ©"<<endl;
 		}
 	}
 	if (roi==NULL){return false;}
@@ -95,6 +122,26 @@ int main( int argc, char** argv )
 	e.affiche();
 	text=isJoueurMAT(&jn, &jb,&e)?"MAT":"Pas MAT";
 	cout<<text<<endl;
+	text=isCoordonneeValide("A1")?"ok":"nope";
+	cout<<text<<endl;
+	text=isCoordonneeValide("11")?"ok":"nope";
+	cout<<text<<endl;
+	text=isCoordonneeValide("1A")?"ok":"nope";
+	cout<<text<<endl;
+	text=isCoordonneeValide("A1a")?"ok":"nope";
+	cout<<text<<endl;
+	text=isCoordonneeValide("a1")?"ok":"nope";
+	cout<<text<<endl;
+	text=isCoordonneeValide("i1")?"ok":"nope";
+	cout<<text<<endl;
+	text=isCoordonneeValide("a0")?"ok":"nope";
+	cout<<text<<endl;
+	text=isCoordonneeValide("a10")?"ok":"nope";
+	cout<<text<<endl;
+	int* coord = convertCoordonnees("b6");
+	cout << coord[0] << endl << coord[1] << endl;
+
+
 	/*while (n>0) {
 
   e.affiche();
