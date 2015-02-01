@@ -439,22 +439,38 @@ Pion::mouvementValide(Echiquier* e, int x, int y)
 vector<int*>
 Pion::getMouvementsPossibles(Echiquier* e){
 	vector <int*> ret;
-	if (mouvementValide(e,m_x,m_y+2)){
+	if (mouvementValide(e,m_x,m_y+2) && e->getPiece(m_x,m_y)->isWhite()==true){
 		int tab[2]={m_x,m_y+2};
 		ret.push_back(tab);
 	}
-	if (mouvementValide(e,m_x,m_y+1)){
+	if (mouvementValide(e,m_x,m_y-2) && e->getPiece(m_x,m_y)->isWhite()==false){
+		int tab[2]={m_x,m_y-2};
+		ret.push_back(tab);
+	}
+	if (mouvementValide(e,m_x,m_y+1)  && e->getPiece(m_x,m_y)->isWhite()==true){
 		int tab[2]={m_x,m_y+1};
 		ret.push_back(tab);
 	}
-	if(mouvementValide(e,m_x+1,m_y+1)){
-		int tab[2]={m_x+1,m_y+1};
+	if (mouvementValide(e,m_x,m_y-1)  && e->getPiece(m_x,m_y)->isWhite()==false){
+			int tab[2]={m_x,m_y-1};
+			ret.push_back(tab);
+		}
+	if(mouvementValide(e,m_x+1,m_y-1)  && e->getPiece(m_x,m_y)->isWhite()==false){
+		int tab[2]={m_x+1,m_y-1};
 		ret.push_back(tab);
 	}
-	if(mouvementValide(e,m_x-1,m_y+1)){
+	if(mouvementValide(e,m_x+1,m_y+1)  && e->getPiece(m_x,m_y)->isWhite()==true){
+			int tab[2]={m_x+1,m_y+1};
+			ret.push_back(tab);
+		}
+	if(mouvementValide(e,m_x-1,m_y+1)  && e->getPiece(m_x,m_y)->isWhite()==true){
 		int tab[2]={m_x-1,m_y+1};
 		ret.push_back(tab);
 	}
+	if(mouvementValide(e,m_x-1,m_y-1)  && e->getPiece(m_x,m_y)->isWhite()==false){
+			int tab[2]={m_x-1,m_y-1};
+			ret.push_back(tab);
+		}
 	return ret;
 }
 
