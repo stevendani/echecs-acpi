@@ -83,22 +83,18 @@ bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 				roi = findTheKing[i];
 			}
 		}
-		vector<Piece*> pieces=attaquant->getPieces();
-		for(vector<Piece*>::size_type i=0;i<pieces.size();i++){
-			vector<int*> mouvements=pieces[i]->getMouvementsPossibles(e);
-			vector<int*> posRoi=roi->getMouvementsPossibles(e);
-			for(vector<int*>::size_type k=0; k<posRoi.size();k++){
-				bool isEnEchec=false;
-				for (vector<int*>::size_type j=0; j<mouvements.size();j++){
-					if(posRoi[k][0]==mouvements[j][0] && posRoi[k][1]==mouvements[j][1]){
-						isEnEchec=true;
-					}
+		vector<int*> posRoi=roi->getMouvementsPossibles(e);
+		for(vector<int*>::size_type k=0; k<posRoi.size();k++){
+			bool isEnEchec=false;
+			for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
+				if(attaquant->getPieces()[i]->mouvementValide(e,posRoi[k][0], posRoi[k][1])){
+					isEnEchec=true;
 				}
-				if(isEnEchec){cpt++;}
 			}
+			if(isEnEchec){cpt++;}
 		}
 		cout<<cpt<<endl<<roi->getMouvementsPossibles(e).size()<<endl;
-		ret=(cpt>=roi->getMouvementsPossibles(e).size());
+		ret=(cpt>=posRoi.size());
 	}
 	return ret;
 }
