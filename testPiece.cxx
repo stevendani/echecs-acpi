@@ -57,13 +57,12 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	}
 	if (roi==NULL){return false;}
 	for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
+		vector<int*> mouvements;
 		if(attaquant->getPieces()[i]->mouvementValide(e, roi->x(), roi->y())){
-			ret = true;
-			vector<int*> mouvements=attaquant->getPieces()[i]->getMouvementsPossibles(e);
 			cout<<"DEBUG:piece mettant en echec trouvÃ©"<<endl<< attaquant->getPieces()[i]->x() << endl << attaquant->getPieces()[i]->y() << endl;
-			for (vector<int*>::size_type j=0; j<mouvements.size();j++){
-				cout<< mouvements[j][0] <<endl<<mouvements[j][1]<<endl;
-			}
+			cout << "DEBUG : isMouvementValide : " << attaquant->getPieces()[i]->mouvementValide(e, roi->x(), roi->y()) << endl;
+			cout << "DEBUG : coordonÃ©es du roi " << roi->x() << roi->y() << endl;
+			ret = true;
 		}
 	}
 	cout<<"DEBUG:fin isJoueurEchec"<<endl;
@@ -110,11 +109,11 @@ tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	string coordonnee;
 	e->affiche();
 	while(!selection){
-		cout << "entrée coordonnée piece" << endl;
+		cout << "entrï¿½e coordonnï¿½e piece" << endl;
 		cin >> coordonnee;
 		while(!isCoordonneeValide(coordonnee)){
 			cout << "coordonee non valide" << endl;
-			cout << "entrée coordonnée piece" << endl;
+			cout << "entrï¿½e coordonnï¿½e piece" << endl;
 			cin >> coordonnee;
 		}
 		coord = convertCoordonnees(coordonnee);
@@ -128,12 +127,12 @@ tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	e->affiche();
 	bool mouvement=false;
 	while(!mouvement){
-		cout << "entrée nouvelle coordonnée piece" << endl;
+		cout << "entrï¿½e nouvelle coordonnï¿½e piece" << endl;
 
 		cin >> coordonnee;
 		while(!isCoordonneeValide(coordonnee)){
 			cout << "coordonee non valide" << endl;
-			cout << "entrée coordonnée piece" << endl;
+			cout << "entrï¿½e coordonnï¿½e piece" << endl;
 			cin >> coordonnee;
 		}
 		int* coord2 = convertCoordonnees(coordonnee);
