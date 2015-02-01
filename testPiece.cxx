@@ -146,9 +146,12 @@ tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 				cout << "en bout de plateau " << endl;
 				if (e->getPiece(coord2[0],coord2[1])->codePiece()==(joueurToCheck->isWhite()?'P':'p')){
 					cout << "promotion demmarer " << endl;
-					joueurToCheck->promotion(e->getPiece(coord2[0],coord2[1]), e);
+					bool white=e->getPiece(coord2[0],coord2[1])->isWhite();
+					joueurToCheck->enleverPiece(e->getPiece(coord2[0],coord2[1]));
+					e->enleverPiece(coord2[0],coord2[1]);
+					e->affiche();
+					joueurToCheck->promotion(coord2[0],coord2[1],white,e);
 					cout << "promotion effectuer " << endl;
-
 				}
 			}
 		}else{

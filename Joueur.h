@@ -27,7 +27,7 @@ class Joueur
   void enleverPiece(Piece* piece);
   vector<Piece*> getPieces();
   void placerPieces(Echiquier &e);
-  void promotion(Piece* piece, Echiquier* e);
+  void promotion(int x, int y, bool white, Echiquier* e);
 };
 
 class JoueurBlanc : public Joueur

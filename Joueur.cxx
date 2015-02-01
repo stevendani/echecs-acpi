@@ -137,41 +137,36 @@ JoueurNoir::JoueurNoir() //: Joueur(false)
 
 }
 void
-Joueur::promotion(Piece* p, Echiquier* e)
+Joueur::promotion(int x, int y, bool white, Echiquier* e)
 {
-
-	int x=p->x();
-	int y=p->x();
-	bool white=p->isWhite();
 	string choix;
-	e->enleverPiece(x,y);
-	enleverPiece(p);
 	int n;
 	bool v=true;
 	while (v==true)
 	{
-		cout << "Choisir pomotion(1-Tour,2-Cavalier,3-Fou,4-Reine):";
+		cout << "Choisir promotion(1-Tour,2-Cavalier,3-Fou,4-Reine):";
 		cin >> n;
 		v=false;
 		if (n==1){
-		Tour* pT = new Tour(white,x,y);
-		m_pieces.push_back(pT);
+			Tour* pP = new Tour(white,x,y);
+			m_pieces.push_back(pP);
+			e->placer(pP);
 		}else if (n==2){
-			Cavalier * pC = new Cavalier(white,x,y);
-			m_pieces.push_back(pC);
+			Cavalier* pP = new Cavalier(white,x,y);
+			m_pieces.push_back(pP);
+			e->placer(pP);
 		}else if (n==3){
-			Fou* pF = new Fou(white,x,y);
-			m_pieces.push_back(pF);
+			Fou* pP = new Fou(white,x,y);
+			m_pieces.push_back(pP);
+			e->placer(pP);
 		}else if (n==4){
-			Reine* pQ = new Reine(white,x,y);
-			m_pieces.push_back(pQ);
+			Reine* pP = new Reine(white,x,y);
+			m_pieces.push_back(pP);
+			e->placer(pP);
 		}else{
-		cout << "Mauvais choix" << endl;
-		v=true;
+			cout << "Mauvais choix" << endl;
+			v=true;
 		}
-
 	}
-
-
 }
 
