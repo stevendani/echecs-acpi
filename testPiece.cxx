@@ -62,8 +62,8 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 			vector<int*> mouvements=attaquant->getPieces()[i]->getMouvementsPossibles(e);
 			cout<<"DEBUG:piece mettant en echec trouvé"<<endl<< attaquant->getPieces()[i]->x() << endl << attaquant->getPieces()[i]->y() << endl;
 			for (vector<int*>::size_type j=0; j<mouvements.size();j++){
-									cout<< mouvements[j][0] <<endl<<mouvements[j][1]<<endl;
-							}
+				cout<< mouvements[j][0] <<endl<<mouvements[j][1]<<endl;
+			}
 		}
 	}
 	cout<<"DEBUG:fin isJoueurEchec"<<endl;
@@ -140,9 +140,19 @@ tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 		if (e->getPiece(coord[0],coord[1])->mouvementValide(e,coord2[0],coord2[1])){
 			mouvement=true;
 			deplacer(e->getPiece(coord[0],coord[1]),joueurToCheck, e, coord2[0],coord2[1]);
-			cout << "depalcement effectuer " << endl;
+			cout << "deplacement effectuer " << endl;
+			cout << coord2[1] << endl;
+			if ((coord2[1]==(joueurToCheck->isWhite()?8:1))) {
+				cout << "en bout de plateau " << endl;
+				if (e->getPiece(coord2[0],coord2[1])->codePiece()==(joueurToCheck->isWhite()?'P':'p')){
+					cout << "promotion demmarer " << endl;
+					joueurToCheck->promotion(e->getPiece(coord2[0],coord2[1]), e);
+					cout << "promotion effectuer " << endl;
+
+				}
+			}
 		}else{
-			cout << "depalcement impossible " << endl << coord2[0] << endl << coord2[1] << endl;
+			cout << "deplacement impossible " << endl << coord2[0] << endl << coord2[1] << endl;
 		}
 	}
 	return false;

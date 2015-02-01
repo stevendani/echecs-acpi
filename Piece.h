@@ -52,6 +52,7 @@ class Fou : virtual public Piece
 {
  public:
   Fou(bool white, bool left);
+  Fou(bool white, int x, int y);
   bool mouvementValide(Echiquier* e, int x, int y);
   vector<int*> getMouvementsPossibles(Echiquier* e);
   char codePiece();
@@ -61,6 +62,7 @@ class Cavalier : virtual public Piece
 {
  public:
   Cavalier(bool white, bool left);
+  Cavalier(bool white, int x, int y);
   bool mouvementValide(Echiquier* e, int x, int y);
   vector<int*> getMouvementsPossibles(Echiquier* e);
   char codePiece();
@@ -70,6 +72,7 @@ class Tour : virtual public Piece
 {
  public:
   Tour(bool white, bool left);
+  Tour(bool white, int x, int y);
   bool mouvementValide(Echiquier* e, int x, int y);
   vector<int*> getMouvementsPossibles(Echiquier* e);
   char codePiece();
@@ -88,6 +91,7 @@ class Reine : public Tour, public Fou
 {
  public:
   Reine(bool white);
+  Reine(bool white, int x, int y);
   bool mouvementValide(Echiquier* e, int x, int y);
   vector<int*> getMouvementsPossibles(Echiquier* e);
   char codePiece();

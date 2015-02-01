@@ -181,7 +181,11 @@ Reine::Reine(bool white) : Piece(4,white?1:8,white), Fou(white,true), Tour(white
 {
 	cout << "DEBUG : Constructeur Reine" << endl;
 }
+Reine::Reine(bool white, int x, int y) : Piece(x, y,white), Fou(white,true), Tour(white,true)
+{
+	cout << "DEBUG : Constructeur  promotion Reine" << endl;
 
+}
 bool
 Reine::mouvementValide(Echiquier* e, int x, int y)
 {
@@ -210,6 +214,10 @@ Reine::codePiece()
 Tour::Tour(bool white, bool left) : Piece(left?1:8, white?1:8,white)
 {
 	cout << "DEBUG : Constructeur Tour" << endl;
+}
+Tour::Tour(bool white, int x, int y) : Piece(x, y,white)
+{
+	cout << "DEBUG : Constructeur promotion Tour" << endl;
 }
 
 bool
@@ -274,7 +282,11 @@ Fou::Fou(bool white, bool left) : Piece(left?3:6, white?1:8,white)
 {
 	cout << "DEBUG : Constructeur Fou" << endl;
 }
+Fou::Fou(bool white, int x, int y) : Piece(x, y,white)
+{
+	cout << "DEBUG : Constructeur  promotion Fou" << endl;
 
+}
 bool
 Fou::mouvementValide(Echiquier* e, int x, int y)
 {
@@ -339,7 +351,11 @@ Cavalier::Cavalier(bool white, bool left) : Piece(left?2:7, white?1:8,white)
 {
 	cout << "DEBUG : Constructeur Cavalier" << endl;
 }
+Cavalier::Cavalier(bool white, int x, int y) : Piece(x, y,white)
+{
+	cout << "DEBUG : Constructeur  promotion Cavalier" << endl;
 
+}
 bool
 Cavalier::mouvementValide(Echiquier* e, int x, int y)
 {
