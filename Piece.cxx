@@ -294,10 +294,27 @@ Fou::mouvementValide(Echiquier* e, int x, int y)
 	if(Piece::mouvementValide(e,x,y)){
 		if((abs(x-m_x))==(abs(y-m_y)) ){
 			cout << "DEBUG : Mouvement possible" << endl;
-			int axeY=min(y,m_y);
+			int axeY=0;
+			int incr=0;
+			if(x<m_x){
+				axeY=y;
+				if (y<m_y){
+					incr=1;
+				}else{
+					incr=-1;
+				}
+			}else{
+				axeY=m_y;
+				if (y<m_y){
+					incr=-1;
+				}else{
+					incr=1;
+				}
+			}
 
 			for(int i=min(x,m_x)+1;i<max(x,m_x);i++){
-				axeY++;
+				axeY=axeY+incr;
+				cout << "DEBUGFOU : "<<i<<axeY<<incr << endl;
 				if(e->getPiece(i,axeY)){
 					cout << "DEBUG : Piece sur la route" << endl;
 					return false;
