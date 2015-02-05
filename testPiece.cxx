@@ -59,9 +59,7 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
 		vector<int*> mouvements;
 		if(attaquant->getPieces()[i]->mouvementValide(e, roi->x(), roi->y())){
-			cout<<"DEBUG:piece mettant en echec trouvé"<<endl<< attaquant->getPieces()[i]->x() << endl << attaquant->getPieces()[i]->y() << endl;
-			cout << "DEBUG : isMouvementValide : " << attaquant->getPieces()[i]->mouvementValide(e, roi->x(), roi->y()) << endl;
-			cout << "DEBUG : coordonées du roi " << roi->x() << roi->y() << endl;
+			cout<<"DEBUG:joueur en echec"<<endl;
 			ret = true;
 		}
 	}
@@ -77,7 +75,6 @@ bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	cout<<"DEBUG:debut isJoueurMat"<<endl;
 	if(isJoueurEnEchec(joueurToCheck, attaquant,e))
 	{
-		cout<<"DEBUG:joueur en echec"<<endl;
 		for(vector<Piece*>::size_type i=0;i<findTheKing.size();i++){
 			if(findTheKing[i]->codePiece()==(joueurToCheck->isWhite()?'R':'r')){
 				roi = findTheKing[i];
@@ -95,7 +92,7 @@ bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 			if(isEnEchec){cpt++;}
 		}
 		cout<<cpt<<endl<<roi->getMouvementsPossibles(e).size()<<endl;
-		ret=(cpt>=posRoi.size());
+		ret=(cpt==posRoi.size());
 	}
 	return ret;
 }
@@ -120,7 +117,7 @@ tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 				selection=true;
 				cout << coord[0] << endl << coord[1] << endl;
 			}else{
-				cout << " pas de mouvement disponible avec cette pi�ce" << endl;
+				cout << " pas de mouvement disponible avec cette pi�ce" << endl;
 			}
 		}else{
 			cout << "pas de piece au coordonnee " << endl << coord[0] << endl << coord[1] << endl;

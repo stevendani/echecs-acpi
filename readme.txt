@@ -1,5 +1,4 @@
-Pour manger une piece : 
-=======================
+TODO 
+====
 
-joueurQuiALaPiece.enleverPiece(pointeurSurLaPiece);
-echiquier.deplacerPiece(Pointeur sur la piece qui l'a mangé, posXdeLaCase, posXdeLaCase);
+Fou::MouvementValide -=-=-=-> CA MARcHE PAAAAAAAAAAAAS :(

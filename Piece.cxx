@@ -373,30 +373,22 @@ Cavalier::mouvementValide(Echiquier* e, int x, int y)
 vector<int*>
 Cavalier::getMouvementsPossibles(Echiquier* e){
 	vector <int*> ret;
-	int incr;
-	if (m_white)
-	{
-		incr=1;
-	}else
-	{
-		incr=-1;
-	}
 	for (int i=1; i<=2; i++){
 
-		if (mouvementValide(e,m_x+(i%2)+incr,m_y+((i+1)%2)+incr)){
-			int tab[2]={m_x+(i%2)+incr,m_y+((i+1)%2)+incr};
+		if (mouvementValide(e,m_x+(i%2)+1,m_y+((i+1)%2)+1)){
+			int tab[2]={m_x+(i%2)+1,m_y+((i+1)%2)+1};
 			ret.push_back(tab);
 		}
-		if (mouvementValide(e,m_x-(i%2)+incr,m_y+((i+1)%2)+incr)){
-			int tab[2]={m_x-(i%2)+incr,m_y+((i+1)%2)+incr};
+		if (mouvementValide(e,m_x-(i%2)-1,m_y+((i+1)%2)+1)){
+			int tab[2]={m_x-(i%2)-1,m_y+((i+1)%2)+1};
 			ret.push_back(tab);
 		}
-		if (mouvementValide(e,m_x+(i%2)+incr,m_y-((i+1)%2)+incr)){
-			int tab[2]={m_x+(i%2)+incr,m_y-((i+1)%2)+incr};
+		if (mouvementValide(e,m_x+(i%2)+1,m_y-((i+1)%2)-1)){
+			int tab[2]={m_x+(i%2)+1,m_y-((i+1)%2)-1};
 			ret.push_back(tab);
 		}
-		if (mouvementValide(e,m_x-(i%2)+incr,m_y-((i+1)%2)+incr)){
-			int tab[2]={m_x-(i%2)+incr,m_y-((i+1)%2)+incr};
+		if (mouvementValide(e,m_x-(i%2)-1,m_y-((i+1)%2)-1)){
+			int tab[2]={m_x-(i%2)-1,m_y-((i+1)%2)-1};
 			ret.push_back(tab);
 		}
 	}
