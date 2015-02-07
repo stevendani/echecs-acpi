@@ -159,7 +159,9 @@ Roi::getMouvementsPossibles(Echiquier* e){
 	for (int i=-1; i<=1;i++){
 		for (int j=-1; j<=1; j++){
 			if (mouvementValide(e,m_x+i,m_y+j) && !(i==0 && j==0)){
-				int tab[2]={m_x+i,m_y+j};
+				int* tab = new int[2]();
+				tab[0]=m_x+i;
+				tab[1]=m_y+j;
 				ret.push_back(tab);
 			}
 		}
@@ -257,11 +259,15 @@ Tour::getMouvementsPossibles(Echiquier* e){
 	vector<int*> ret;
 	for( int i=1; i<=8; i++){
 		if(mouvementValide(e,m_x,i)){
-			int tab[2]={m_x,i};
+			int* tab = new int[2]();
+			tab[0]=m_x;
+			tab[1]=i;
 			ret.push_back(tab);
 		}
 		if(mouvementValide(e,i,m_y)){
-			int tab[2]={i,m_y};
+			int* tab = new int[2]();
+			tab[0]=i;
+			tab[0]=m_y;
 			ret.push_back(tab);
 		}
 	}
@@ -334,19 +340,27 @@ Fou::getMouvementsPossibles(Echiquier* e){
 	vector<int*> ret;
 	for(int i=1; i<=7; i++){
 		if(mouvementValide(e,m_x+i,m_y+i)){
-			int tab[2]={m_x+i, m_y+i};
+			int* tab = new int[2]();
+			tab[0]=m_x+i;
+			tab[1]=m_y+i;
 			ret.push_back(tab);
 		}
 		if(mouvementValide(e,m_x-i,m_y-i)){
-			int tab[2]={m_x-i, m_y-i};
+			int* tab = new int[2]();
+			tab[0]=m_x-i;
+			tab[1]=m_y-i;
 			ret.push_back(tab);
 		}
 		if(mouvementValide(e,m_x-i,m_y+i)){
-			int tab[2]={m_x-i, m_y+i};
+			int* tab = new int[2]();
+			tab[0]=m_x-i;
+			tab[1]=m_y+i;
 			ret.push_back(tab);
 		}
 		if(mouvementValide(e,m_x+i,m_y-i)){
-			int tab[2]={m_x+i, m_y-i};
+			int* tab = new int[2]();
+			tab[0]=m_x+i;
+			tab[1]=m_y-i;
 			ret.push_back(tab);
 		}
 	}
@@ -391,21 +405,28 @@ vector<int*>
 Cavalier::getMouvementsPossibles(Echiquier* e){
 	vector <int*> ret;
 	for (int i=1; i<=2; i++){
-
 		if (mouvementValide(e,m_x+(i%2)+1,m_y+((i+1)%2)+1)){
-			int tab[2]={m_x+(i%2)+1,m_y+((i+1)%2)+1};
+			int* tab = new int[2]();
+			tab[0]=m_x+(i%2)+1;
+			tab[1]=m_y+((i+1)%2)+1;
 			ret.push_back(tab);
 		}
 		if (mouvementValide(e,m_x-(i%2)-1,m_y+((i+1)%2)+1)){
-			int tab[2]={m_x-(i%2)-1,m_y+((i+1)%2)+1};
+			int* tab = new int[2]();
+			tab[0]=m_x-(i%2)-1;
+			tab[1]=m_y+((i+1)%2)+1;
 			ret.push_back(tab);
 		}
 		if (mouvementValide(e,m_x+(i%2)+1,m_y-((i+1)%2)-1)){
-			int tab[2]={m_x+(i%2)+1,m_y-((i+1)%2)-1};
+			int* tab = new int[2]();
+			tab[0]=m_x+(i%2)+1;
+			tab[1]=m_y-((i+1)%2)-1;
 			ret.push_back(tab);
 		}
 		if (mouvementValide(e,m_x-(i%2)-1,m_y-((i+1)%2)-1)){
-			int tab[2]={m_x-(i%2)-1,m_y-((i+1)%2)-1};
+			int* tab = new int[2]();
+			tab[0]=m_x-(i%2)-1;
+			tab[1]=m_y-((i+1)%2)-1;
 			ret.push_back(tab);
 		}
 	}
@@ -457,36 +478,29 @@ Pion::mouvementValide(Echiquier* e, int x, int y)
 vector<int*>
 Pion::getMouvementsPossibles(Echiquier* e){
 	vector <int*> ret;
-	if (mouvementValide(e,m_x,m_y+2) && e->getPiece(m_x,m_y)->isWhite()==true){
-		int tab[2]={m_x,m_y+2};
+	int mult = isWhite()?1:-1;
+	if (mouvementValide(e,m_x,m_y+(2*mult))){
+		int* tab = new int[2]();
+		tab[0]=m_x;
+		tab[1]=m_y+(2*mult);
 		ret.push_back(tab);
 	}
-	if (mouvementValide(e,m_x,m_y-2) && e->getPiece(m_x,m_y)->isWhite()==false){
-		int tab[2]={m_x,m_y-2};
+	if (mouvementValide(e,m_x,m_y+mult)){
+		int* tab = new int[2]();
+		tab[0]=m_x;
+		tab[1]=m_y+mult;
 		ret.push_back(tab);
 	}
-	if (mouvementValide(e,m_x,m_y+1)  && e->getPiece(m_x,m_y)->isWhite()==true){
-		int tab[2]={m_x,m_y+1};
+	if(mouvementValide(e,m_x+1,m_y+mult)){
+		int* tab = new int[2]();
+		tab[0]=m_x+1;
+		tab[1]=m_y+mult;
 		ret.push_back(tab);
 	}
-	if (mouvementValide(e,m_x,m_y-1)  && e->getPiece(m_x,m_y)->isWhite()==false){
-		int tab[2]={m_x,m_y-1};
-		ret.push_back(tab);
-	}
-	if(mouvementValide(e,m_x+1,m_y-1)  && e->getPiece(m_x,m_y)->isWhite()==false){
-		int tab[2]={m_x+1,m_y-1};
-		ret.push_back(tab);
-	}
-	if(mouvementValide(e,m_x+1,m_y+1)  && e->getPiece(m_x,m_y)->isWhite()==true){
-		int tab[2]={m_x+1,m_y+1};
-		ret.push_back(tab);
-	}
-	if(mouvementValide(e,m_x-1,m_y+1)  && e->getPiece(m_x,m_y)->isWhite()==true){
-		int tab[2]={m_x-1,m_y+1};
-		ret.push_back(tab);
-	}
-	if(mouvementValide(e,m_x-1,m_y-1)  && e->getPiece(m_x,m_y)->isWhite()==false){
-		int tab[2]={m_x-1,m_y-1};
+	if(mouvementValide(e,m_x-1,m_y+mult)){
+		int* tab = new int[2]();
+		tab[0]=m_x-1;
+		tab[1]=m_y+mult;
 		ret.push_back(tab);
 	}
 	return ret;
