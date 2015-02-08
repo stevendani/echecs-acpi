@@ -67,22 +67,46 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	return ret;
 }
 bool isPat(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
-	cout<<"DEBUG:debut isPAT"<<endl;
 	bool ret = true;
-	if(!(isJoueurEnEchec(joueurToCheck,attaquant,e)))
+	if(!isJoueurEnEchec(joueurToCheck, attaquant,e))
 	{
+		cout<<"DEBUG:debut isPAT"<<endl;
+
+		int cpt=0;
+		Piece* roi;
 		for(vector<Piece*>::size_type i=0;i< joueurToCheck->getPieces().size();i++){
 			if(!( joueurToCheck->getPieces()[i]->codePiece()==(joueurToCheck->isWhite()?'R':'r'))){
 				if( joueurToCheck->getPieces()[i]->getMouvementsPossibles(e).size()>0){
+					cout<<"DEBUG:mouvment possible autre rois"<<endl;
 					ret=false;
 				}
+			}else{
+				roi = joueurToCheck->getPieces()[i];
 			}
 		}
-	}else{
+		if(ret==true){
+			vector<int*> posRoi=roi->getMouvementsPossibles(e);
+			for(vector<int*>::size_type k=0; k<posRoi.size();k++){
+				cout<<posRoi[k][0]<<endl<<posRoi[k][1]<<endl;
+				bool isEnEchec=false;
+				for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
+					cout<<posRoi[k][0]<<endl<<posRoi[k][1]<<endl;
+					if(attaquant->getPieces()[i]->mouvementValide(e,posRoi[k][0], posRoi[k][1])){
+						isEnEchec=true;
+					}
+				}
+				if(isEnEchec){cpt++;}
+			}
+			ret=(cpt==posRoi.size());
+		}
+	}
+	else{
 		ret=false;
 	}
 	return ret;
 }
+
+
 bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	bool ret =false;
 	int cpt=0;
@@ -215,72 +239,92 @@ int main( int argc, char** argv )
 	while (partie){
 		partie=true;
 		cout <<"tour joueur blanc" << endl ;
-		if (!isJoueurMAT(&jb, &jn,&e)){
-			cout <<" _ _ _    _   _   _ _ _   "<<endl;
-			cout <<"|_   _| / _ \\| | | | _ \\  "<<endl;
-			cout <<"  | |  | (_) | |_| |   /  "<<endl;
-			cout <<"  |_|   \\___/ \\___/|_|_\\  "<<endl;
-			cout <<"                       "<<endl;
-			cout <<"//   _                               _     _                  "<<endl;
-			cout <<"//  (_) ___  _   _  ___ _   _ _ __  | |__ | | __ _ _ __   ___ "<<endl;
-			cout <<"//  | |/ _ \\| | | |/ _ | | | | '__| | '_ \\| |/ _` | '_ \\ / __|"<<endl;
-			cout <<"//  | | (_) | |_| |  __| |_| | |    | |_) | | (_| | | | | (__ "<<endl;
-			cout <<"// _/ |\\___/ \\__,_|\\___|\\__,_|_|    |_.__/|_|\\__,_|_| |_|\\___|"<<endl;
-			cout <<"//|__/                                                        "<<endl;
-			tour(&jb, &jn,&e);
-		}else{
-			partie=false;
-			cout <<" _______  _______  _______  _______    _______           _______  _______ "<<endl;
-			cout <<"(  ____ \(  ___  )(       )(  ____ \\  (  ___  )|\\     /|(  ____ \\(  ____ )"<<endl;
-			cout <<"| (    \\/| (   ) || () () || (    \\/  | (   ) || )   ( || (    \\/| (    )|"<<endl;
-			cout <<"| |      | (___) || || || || (__      | |   | || |   | || (__    | (____)|"<<endl;
-			cout <<"| | ____ |  ___  || |(_)| ||  __)     | |   | |( (   ) )|  __)   |     __)"<<endl;
-			cout <<"| | \\_  )| (   ) || |   | || (        | |   | | \\ \\_/ / | (      | (\\ (   "<<endl;
-			cout <<"| (___) || )   ( || )   ( || (____/\\  | (___) |  \\   /  | (____/\\| ) \\ \\__"<<endl;
-			cout <<"(_______)|/     \\||/     \\|(_______/  (_______)   \\_/   (_______/|/   \\__/"<<endl;
-			cout <<"//     _                               _     _                  "<<endl;
-			cout <<"//    (_) ___  _   _  ___ _   _ _ __  | |__ | | __ _ _ __   ___ "<<endl;
-			cout <<"//    | |/ _ \\| | | |/ _ | | | | '__| | '_ \\| |/ _` | '_ \\ / __|"<<endl;
-			cout <<"//    | | (_) | |_| |  __| |_| | |    | |_) | | (_| | | | | (__ "<<endl;
-			cout <<"//   _/ |\\___/ \\__,_|\\___|\\__,_|_|    |_.__/|_|\\__,_|_| |_|\\___|"<<endl;
-			cout <<"//  |__/                                                        "<<endl;
-
-		}
-		cout <<"tour joueur noire" << endl ;
-		if(partie){
-			if (!isJoueurMAT(&jn, &jb,&e)){
+		if(!isPat(&jb, &jn,&e)){
+			if (!isJoueurMAT(&jb, &jn,&e)){
 				cout <<" _ _ _    _   _   _ _ _   "<<endl;
 				cout <<"|_   _| / _ \\| | | | _ \\  "<<endl;
 				cout <<"  | |  | (_) | |_| |   /  "<<endl;
 				cout <<"  |_|   \\___/ \\___/|_|_\\  "<<endl;
 				cout <<"                       "<<endl;
-				cout <<"//      _                                           _      "<<endl;
-				cout <<"//     (_)                                         (_)     "<<endl;
-				cout <<"//      _  ___  _   _  ___ _   _ _ __   _ __   ___  _ _ __ "<<endl;
-				cout <<"//     | |/ _ \\| | | |/ _ | | | | '__| | '_ \\ / _ \\| | '__|"<<endl;
-				cout <<"//     | | (_) | |_| |  __| |_| | |    | | | | (_) | | |   "<<endl;
-				cout <<"//     | |\\___/ \\__,_|\\___|\\__,_|_|    |_| |_|\\___/|_|_|   "<<endl;
-				cout <<"//    _/ |                                                 "<<endl;
-				cout <<"//   |__/                                                  "<<endl;
-
-				tour(&jn, &jb,&e);
+				cout <<"//   _                               _     _                  "<<endl;
+				cout <<"//  (_) ___  _   _  ___ _   _ _ __  | |__ | | __ _ _ __   ___ "<<endl;
+				cout <<"//  | |/ _ \\| | | |/ _ | | | | '__| | '_ \\| |/ _` | '_ \\ / __|"<<endl;
+				cout <<"//  | | (_) | |_| |  __| |_| | |    | |_) | | (_| | | | | (__ "<<endl;
+				cout <<"// _/ |\\___/ \\__,_|\\___|\\__,_|_|    |_.__/|_|\\__,_|_| |_|\\___|"<<endl;
+				cout <<"//|__/                                                        "<<endl;
+				tour(&jb, &jn,&e);
 			}else{
 				partie=false;
 				cout <<" _______  _______  _______  _______    _______           _______  _______ "<<endl;
-				cout <<"(  ____ \\(  ___  )(       )(  ____ \\  (  ___  )|\\     /|(  ____ \\(  ____ )"<<endl;
+				cout <<"(  ____ \(  ___  )(       )(  ____ \\  (  ___  )|\\     /|(  ____ \\(  ____ )"<<endl;
 				cout <<"| (    \\/| (   ) || () () || (    \\/  | (   ) || )   ( || (    \\/| (    )|"<<endl;
 				cout <<"| |      | (___) || || || || (__      | |   | || |   | || (__    | (____)|"<<endl;
 				cout <<"| | ____ |  ___  || |(_)| ||  __)     | |   | |( (   ) )|  __)   |     __)"<<endl;
 				cout <<"| | \\_  )| (   ) || |   | || (        | |   | | \\ \\_/ / | (      | (\\ (   "<<endl;
 				cout <<"| (___) || )   ( || )   ( || (____/\\  | (___) |  \\   /  | (____/\\| ) \\ \\__"<<endl;
 				cout <<"(_______)|/     \\||/     \\|(_______/  (_______)   \\_/   (_______/|/   \\__/"<<endl;
-				cout <<"      _____                                ______        _            "<<endl;
-				cout <<"	 (_____)                              |  ___ \\      (_)           "<<endl;
-				cout <<"	    _  ___  _   _  ____ _   _  ____   | |   | | ___  _  ____ ____ "<<endl;
-				cout <<"	   | |/ _ \\| | | |/ _  | | | |/ ___)  | |   | |/ _ \\| |/ ___/ _  )"<<endl;
-				cout <<"	___| | |_| | |_| ( (/ /| |_| | |      | |   | | |_| | | |  ( (/ / "<<endl;
-				cout <<"   (____/ \\___/ \\____|\\____)\\____|_|      |_|   |_|\\___/|_|_|   \\____)"<<endl;
+				cout <<"//     _                               _     _                  "<<endl;
+				cout <<"//    (_) ___  _   _  ___ _   _ _ __  | |__ | | __ _ _ __   ___ "<<endl;
+				cout <<"//    | |/ _ \\| | | |/ _ | | | | '__| | '_ \\| |/ _` | '_ \\ / __|"<<endl;
+				cout <<"//    | | (_) | |_| |  __| |_| | |    | |_) | | (_| | | | | (__ "<<endl;
+				cout <<"//   _/ |\\___/ \\__,_|\\___|\\__,_|_|    |_.__/|_|\\__,_|_| |_|\\___|"<<endl;
+				cout <<"//  |__/                                                        "<<endl;
 
+			}
+		}else{
+			partie=false;
+			cout <<"__________  ________________"<<endl;
+			cout <<"\\______   \\/  _  \\__    ___/"<<endl;
+			cout <<" |     ___/  /_\\  \\|    |   "<<endl;
+			cout <<" |    |  /    |    \\    |   "<<endl;
+			cout <<" |____|  \\____|__  /____|   "<<endl;
+			cout <<"                 \\/         "<<endl;
+		}
+		cout <<"tour joueur noire" << endl ;
+		if(partie){
+			if(!isPat(&jb, &jn,&e)){
+				if (!isJoueurMAT(&jn, &jb,&e)){
+					cout <<" _ _ _    _   _   _ _ _   "<<endl;
+					cout <<"|_   _| / _ \\| | | | _ \\  "<<endl;
+					cout <<"  | |  | (_) | |_| |   /  "<<endl;
+					cout <<"  |_|   \\___/ \\___/|_|_\\  "<<endl;
+					cout <<"                       "<<endl;
+					cout <<"//      _                                           _      "<<endl;
+					cout <<"//     (_)                                         (_)     "<<endl;
+					cout <<"//      _  ___  _   _  ___ _   _ _ __   _ __   ___  _ _ __ "<<endl;
+					cout <<"//     | |/ _ \\| | | |/ _ | | | | '__| | '_ \\ / _ \\| | '__|"<<endl;
+					cout <<"//     | | (_) | |_| |  __| |_| | |    | | | | (_) | | |   "<<endl;
+					cout <<"//     | |\\___/ \\__,_|\\___|\\__,_|_|    |_| |_|\\___/|_|_|   "<<endl;
+					cout <<"//    _/ |                                                 "<<endl;
+					cout <<"//   |__/                                                  "<<endl;
+
+					tour(&jn, &jb,&e);
+				}else{
+					partie=false;
+					cout <<" _______  _______  _______  _______    _______           _______  _______ "<<endl;
+					cout <<"(  ____ \\(  ___  )(       )(  ____ \\  (  ___  )|\\     /|(  ____ \\(  ____ )"<<endl;
+					cout <<"| (    \\/| (   ) || () () || (    \\/  | (   ) || )   ( || (    \\/| (    )|"<<endl;
+					cout <<"| |      | (___) || || || || (__      | |   | || |   | || (__    | (____)|"<<endl;
+					cout <<"| | ____ |  ___  || |(_)| ||  __)     | |   | |( (   ) )|  __)   |     __)"<<endl;
+					cout <<"| | \\_  )| (   ) || |   | || (        | |   | | \\ \\_/ / | (      | (\\ (   "<<endl;
+					cout <<"| (___) || )   ( || )   ( || (____/\\  | (___) |  \\   /  | (____/\\| ) \\ \\__"<<endl;
+					cout <<"(_______)|/     \\||/     \\|(_______/  (_______)   \\_/   (_______/|/   \\__/"<<endl;
+					cout <<"      _____                                ______        _            "<<endl;
+					cout <<"	 (_____)                              |  ___ \\      (_)           "<<endl;
+					cout <<"	    _  ___  _   _  ____ _   _  ____   | |   | | ___  _  ____ ____ "<<endl;
+					cout <<"	   | |/ _ \\| | | |/ _  | | | |/ ___)  | |   | |/ _ \\| |/ ___/ _  )"<<endl;
+					cout <<"	___| | |_| | |_| ( (/ /| |_| | |      | |   | | |_| | | |  ( (/ / "<<endl;
+					cout <<"   (____/ \\___/ \\____|\\____)\\____|_|      |_|   |_|\\___/|_|_|   \\____)"<<endl;
+
+				}
+			}else{
+				partie=false;
+				cout <<"__________  ________________"<<endl;
+				cout <<"\\______   \\/  _  \\__    ___/"<<endl;
+				cout <<" |     ___/  /_\\  \\|    |   "<<endl;
+				cout <<" |    |  /    |    \\    |   "<<endl;
+				cout <<" |____|  \\____|__  /____|   "<<endl;
+				cout <<"                 \\/         "<<endl;
 			}
 		}
 	}
