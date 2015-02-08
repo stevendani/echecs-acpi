@@ -66,7 +66,23 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	cout<<"DEBUG:fin isJoueurEchec"<<endl;
 	return ret;
 }
-
+bool isPat(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
+	cout<<"DEBUG:debut isPAT"<<endl;
+	bool ret = true;
+	if(!(isJoueurEnEchec(joueurToCheck,attaquant,e)))
+	{
+		for(vector<Piece*>::size_type i=0;i< joueurToCheck->getPieces().size();i++){
+			if(!( joueurToCheck->getPieces()[i]->codePiece()==(joueurToCheck->isWhite()?'R':'r'))){
+				if( joueurToCheck->getPieces()[i]->getMouvementsPossibles(e).size()>0){
+					ret=false;
+				}
+			}
+		}
+	}else{
+		ret=false;
+	}
+	return ret;
+}
 bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	bool ret =false;
 	int cpt=0;
