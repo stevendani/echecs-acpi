@@ -85,8 +85,17 @@ bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 			cout<<posRoi[k][0]<<endl<<posRoi[k][1]<<endl;
 			bool isEnEchec=false;
 			for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
+				cout<<posRoi[k][0]<<endl<<posRoi[k][1]<<endl;
 				if(attaquant->getPieces()[i]->mouvementValide(e,posRoi[k][0], posRoi[k][1])){
 					isEnEchec=true;
+					for(vector<Piece*>::size_type j=0;j<findTheKing.size();j++){
+						cout<<"attaquant"<<attaquant->getPieces()[i]->x()<<endl<<attaquant->getPieces()[i]->y()<<endl;
+						cout<<"joueur"<<findTheKing[j]->x()<<endl<<findTheKing[j]->y()<<endl;
+						if (findTheKing[j]->mouvementValide(e,attaquant->getPieces()[i]->x(), attaquant->getPieces()[i]->y())){
+							isEnEchec=false;
+							cout<<"mangeable"<<endl;
+						}
+					}
 				}
 			}
 			if(isEnEchec){cpt++;}
