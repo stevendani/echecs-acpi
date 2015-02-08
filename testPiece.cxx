@@ -100,8 +100,22 @@ bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 			}
 			if(isEnEchec){cpt++;}
 		}
+		bool interupt = false;
+		for(vector<Piece*>::size_type j=0;j<joueurToCheck->getPieces().size();j++){
+			vector<int*> mouvements= joueurToCheck->getPieces()[j]->getMouvementsPossibles(e);
+			for(vector<int*>::size_type l=0;l<mouvements.size();l++){
+				int origX = joueurToCheck->getPieces()[j]->x();
+				int origY = joueurToCheck->getPieces()[j]->y();
+				e->deplacer(joueurToCheck->getPieces()[j], mouvements[l][0], mouvements[l][1]);
+				if(!isJoueurEnEchec(joueurToCheck, attaquant, e)){
+					interupt = true;
+					cout << "iterruption possible" << endl << origX << origY << endl << mouvements[l][0] << mouvements[l][1] << endl;
+				}
+				e->deplacer(joueurToCheck->getPieces()[j],origX, origY);
+			}
+		}
 		cout<<cpt<<endl<<roi->getMouvementsPossibles(e).size()<<endl;
-		ret=(cpt==posRoi.size());
+		ret=(cpt==posRoi.size() && !interupt);
 	}
 	return ret;
 }
