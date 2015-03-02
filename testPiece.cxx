@@ -175,19 +175,21 @@ tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 			cout << "entree coordonnee piece" << endl;
 			cin >> coordonnee;
 		}
-		coord = convertCoordonnees(coordonnee);
-		if (e->getPiece(coord[0],coord[1])!= NULL && (e->getPiece(coord[0],coord[1])->isWhite()==joueurToCheck->isWhite())){
+		int* coord1 = convertCoordonnees(coordonnee);
+		if (e->getPiece(coord1[0],coord1[1])!= NULL && (e->getPiece(coord1[0],coord1[1])->isWhite()==joueurToCheck->isWhite())){
 
-			if (e->getPiece(coord[0],coord[1])->getMouvementsPossibles(e).size()>0){
+			if (e->getPiece(coord1[0],coord1[1])->getMouvementsPossibles(e).size()>0){
 				selection=true;
-				cout << coord[0] << endl << coord[1] << endl;
+				cout << coord1[0] << endl << coord1[1] << endl;
 			}else{
 				cout << " pas de mouvement disponible avec cette pi�ce" << endl;
 			}
 		}else{
-			cout << "pas de piece au coordonnee " << endl << coord[0] << endl << coord[1] << endl;
+			cout << "pas de piece au coordonnee " << endl << coord1[0] << endl << coord1[1] << endl;
 		}
+		delete[] coord1;
 	}
+	coord = convertCoordonnees(coordonnee);
 	e->affiche();
 	bool mouvement=false;
 	while(!mouvement){
