@@ -161,7 +161,7 @@ bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	vector<Piece*>().swap(findTheKing);
 	return ret;
 }
-bool
+void
 tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	bool selection=false;
 	int* coord;
@@ -219,8 +219,9 @@ tour(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 		}else{
 			cout << "deplacement impossible " << endl << coord2[0] << endl << coord2[1] << endl;
 		}
+		delete[] coord2;
 	}
-	return false;
+	delete[] coord;
 }
 /**
  * Programme principal

@@ -21,10 +21,14 @@ Joueur::~Joueur()
 
 void
 Joueur::enleverPiece(Piece* piece){
-	for(vector<Piece*>::size_type i=0;i<m_pieces.size();i++){
-		if(m_pieces[i] == piece){
-			m_pieces.erase(m_pieces.begin()+i);
+	vector<Piece*>::iterator p = m_pieces.begin();
+	while ( p != m_pieces.end() )
+	{
+		if(piece == *p){
+			m_pieces.erase(p);
+			delete *p;
 		}
+		p++;
 	}
 }
 
