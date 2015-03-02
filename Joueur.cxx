@@ -26,7 +26,6 @@ Joueur::enleverPiece(Piece* piece){
 	{
 		if(piece == *p){
 			m_pieces.erase(p);
-			delete *p;
 		}
 		p++;
 	}
