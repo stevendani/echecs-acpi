@@ -63,15 +63,15 @@ bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 			ret = true;
 		}
 	}
+	vector<Piece*>().swap(findTheKing);
 	cout<<"DEBUG:fin isJoueurEchec"<<endl;
 	return ret;
 }
 bool isPat(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	bool ret = true;
+	cout<<"DEBUG:debut isPAT"<<endl;
 	if(!isJoueurEnEchec(joueurToCheck, attaquant,e))
 	{
-		cout<<"DEBUG:debut isPAT"<<endl;
-
 		int cpt=0;
 		Piece* roi;
 		for(vector<Piece*>::size_type i=0;i< joueurToCheck->getPieces().size();i++){
@@ -98,6 +98,7 @@ bool isPat(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 				if(isEnEchec){cpt++;}
 			}
 			ret=(cpt==posRoi.size());
+			vector<int*>().swap(posRoi);
 		}
 	}
 	else{
@@ -129,8 +130,6 @@ bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 				if(attaquant->getPieces()[i]->mouvementValide(e,posRoi[k][0], posRoi[k][1])){
 					isEnEchec=true;
 					for(vector<Piece*>::size_type j=0;j<findTheKing.size();j++){
-						cout<<"attaquant"<<attaquant->getPieces()[i]->x()<<endl<<attaquant->getPieces()[i]->y()<<endl;
-						cout<<"joueur"<<findTheKing[j]->x()<<endl<<findTheKing[j]->y()<<endl;
 						if (findTheKing[j]->mouvementValide(e,attaquant->getPieces()[i]->x(), attaquant->getPieces()[i]->y())){
 							isEnEchec=false;
 							cout<<"mangeable"<<endl;
@@ -153,10 +152,13 @@ bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 				}
 				e->deplacer(joueurToCheck->getPieces()[j],origX, origY);
 			}
+			vector<int*>().swap(mouvements);
 		}
 		cout<<cpt<<endl<<roi->getMouvementsPossibles(e).size()<<endl;
 		ret=(cpt==posRoi.size() && !interupt);
+		vector<int*>().swap(posRoi);
 	}
+	vector<Piece*>().swap(findTheKing);
 	return ret;
 }
 bool

@@ -14,7 +14,6 @@ using namespace std;
 
 Piece::Piece()
 {
-	cout << "DEBUG : Constructeur Piece defaut" << endl;
 }
 
 Piece::Piece(const Piece & autre)
@@ -22,7 +21,6 @@ Piece::Piece(const Piece & autre)
 	m_x=autre.m_x;
 	m_y=autre.m_y;
 	m_white=autre.m_white;
-	cout << "DEBUG : Constructeur Piece par copie" << endl;
 }
 
 Piece &
@@ -31,13 +29,11 @@ Piece::operator=(const Piece & autre)
 	m_x=autre.m_x;
 	m_y=autre.m_y;
 	m_white=autre.m_white;
-	cout << "DEBUG : Affectation Piece" << endl;
 	return *this;
 }
 
 Piece::~Piece()
 {
-	cout << "DEBUG : Destructeur Piece defaut" << endl;
 }
 
 Piece::Piece( int x, int y, bool white )
@@ -45,7 +41,6 @@ Piece::Piece( int x, int y, bool white )
 	m_x = x;
 	m_y = y;
 	m_white = white;
-	cout << "DEBUG : Constructeur Piece specialise" << endl;
 }
 
 void
@@ -98,12 +93,9 @@ Piece::affiche()
 bool
 Piece::mouvementValide(Echiquier* e, int x, int y)
 {
-	cout << "DEBUG : mouvementValide Piece" << endl;
 	if(x>=1 && x<=8 && y>=1 && y<=8){
-		cout << "DEBUG : Dans l'echiquier" << endl;
 		if(e->getPiece(x,y)){
 			if(e->getPiece(x,y)->m_white == m_white){
-				cout << "DEBUG : Case déjà occupée par une piece de la même couleur" << endl;
 				return false;
 			}
 		}
@@ -137,16 +129,13 @@ Roi::Roi(bool white)
 	m_x=5;
 	m_y=white?1:8;
 	m_white=white;
-	cout << "DEBUG : Constructeur Roi" << endl;
 }
 
 bool
 Roi::mouvementValide(Echiquier* e, int x, int y)
 {
-	cout << "DEBUG : mouvementValide Roi" << endl;
 	if(Piece::mouvementValide(e,x,y)){
 		if((abs(x-m_x)<=1) && (abs(y-m_y)<=1) && (x!=m_x || y!=m_y)){
-			cout << "DEBUG : Mouvement valide" << endl;
 			return true;
 		}
 	}
@@ -181,17 +170,14 @@ Roi::codePiece()
 
 Reine::Reine(bool white) : Piece(4,white?1:8,white), Fou(white,true), Tour(white,true)
 {
-	cout << "DEBUG : Constructeur Reine" << endl;
 }
 Reine::Reine(bool white, int x, int y) : Piece(x, y,white), Fou(white,true), Tour(white,true)
 {
-	cout << "DEBUG : Constructeur  promotion Reine" << endl;
 
 }
 bool
 Reine::mouvementValide(Echiquier* e, int x, int y)
 {
-	cout << "DEBUG : mouvementValide Reine" << endl;
 	return Fou::mouvementValide(e,x,y) || Tour::mouvementValide(e,x,y);
 }
 
@@ -215,38 +201,30 @@ Reine::codePiece()
 
 Tour::Tour(bool white, bool left) : Piece(left?1:8, white?1:8,white)
 {
-	cout << "DEBUG : Constructeur Tour" << endl;
 }
 Tour::Tour(bool white, int x, int y) : Piece(x, y,white)
 {
-	cout << "DEBUG : Constructeur promotion Tour" << endl;
 }
 
 bool
 Tour::mouvementValide(Echiquier* e, int x, int y)
 {
-	cout << "DEBUG : mouvementValide Tour" << endl;
 	if(Piece::mouvementValide(e,x,y)){
 		if((x == m_x && y != m_y)||(x != m_x && y == m_y)){
-			cout << "DEBUG : Mouvement possible" << endl;
 			if(y == m_y){
 				for(int i=min(x,m_x)+1;i<max(x,m_x);i++){
 					if(e->getPiece(i, y)){
-						cout << "DEBUG : Piece sur la route" << endl;
 						return false;
 					}
 				}
-				cout << "DEBUG : Mouvement valide" << endl;
 				return true;
 			}
 			else if(x == m_x){
 				for(int i=min(y,m_y)+1;i<max(y,m_y);i++){
 					if(e->getPiece(x, i)){
-						cout << "DEBUG : Piece sur la routee" << endl;
 						return false;
 					}
 				}
-				cout << "DEBUG : Mouvement valide" << endl;
 				return true;
 			}
 		}
@@ -286,20 +264,16 @@ Tour::codePiece()
 
 Fou::Fou(bool white, bool left) : Piece(left?3:6, white?1:8,white)
 {
-	cout << "DEBUG : Constructeur Fou" << endl;
 }
 Fou::Fou(bool white, int x, int y) : Piece(x, y,white)
 {
-	cout << "DEBUG : Constructeur  promotion Fou" << endl;
 
 }
 bool
 Fou::mouvementValide(Echiquier* e, int x, int y)
 {
-	cout << "DEBUG : mouvementValide FOU" << endl;
 	if(Piece::mouvementValide(e,x,y)){
 		if((abs(x-m_x))==(abs(y-m_y)) ){
-			cout << "DEBUG : Mouvement possible" << endl;
 			int axeY=0;
 			int incr=0;
 			if(x<m_x){
@@ -320,18 +294,14 @@ Fou::mouvementValide(Echiquier* e, int x, int y)
 
 			for(int i=min(x,m_x)+1;i<max(x,m_x);i++){
 				axeY=axeY+incr;
-				cout << "DEBUGFOU : "<<i<<axeY<<incr << endl;
 				if(e->getPiece(i,axeY)){
-					cout << "DEBUG : Piece sur la route" << endl;
 					return false;
 				}
 			}
 
-			cout << "DEBUG : Mouvement valide" << endl;
 			return true;
 		}
 	}
-	cout << "DEBUG : Mouvement impossible" << endl;
 	return false;
 }
 
@@ -380,24 +350,19 @@ Fou::codePiece()
 
 Cavalier::Cavalier(bool white, bool left) : Piece(left?2:7, white?1:8,white)
 {
-	cout << "DEBUG : Constructeur Cavalier" << endl;
 }
 Cavalier::Cavalier(bool white, int x, int y) : Piece(x, y,white)
 {
-	cout << "DEBUG : Constructeur  promotion Cavalier" << endl;
 
 }
 bool
 Cavalier::mouvementValide(Echiquier* e, int x, int y)
 {
-	cout << "DEBUG : mouvementValide Cavalier" << endl;
 	if(Piece::mouvementValide(e,x,y)){
 		if( ( (abs(x-m_x)==2) && (abs(y-m_y)==1) ) || ( (abs(x-m_x)==1) && (abs(y-m_y)==2) ) ){
-			cout << "DEBUG : Mouvement valide" << endl;
 			return true;
 		}
 	}
-	cout << "DEBUG : Mouvement impossible" << endl;
 	return false;
 }
 
@@ -445,25 +410,18 @@ Cavalier::codePiece()
 
 Pion::Pion(bool white, int pos) : Piece(pos, white?2:7,white)
 {
-	cout << "DEBUG : Constructeur Cavalier" << endl;
 }
 
 bool
 Pion::mouvementValide(Echiquier* e, int x, int y)
 {
-	cout << "DEBUG : mouvementValide Pion" << endl;
 	if(Piece::mouvementValide(e,x,y)){
 		if((m_white && x==m_x && y == 4 && m_y==2 && e->getPiece(m_x, 3)==NULL && e->getPiece(m_x, 4)==NULL) || ((!m_white)&& x==m_x  && y == 5 && m_y==7 && e->getPiece(m_x, 6)==NULL && e->getPiece(m_x, 5)==NULL)){
-			cout << "DEBUG : déplacement de deux cases ok" << endl;
 			return true;
 		} else if((m_white && y == m_y+1 && abs(x-m_x)<=1) || ((!m_white) && y == m_y-1 && abs(x-m_x)<=1)){
-			cout << "DEBUG : Mouvement possible" << endl;
 			if(abs(x-m_x)==1){
-				cout << "DEBUG : Déplacement diagonal" << endl;
 				if(e->getPiece(x,y)!= NULL){
-					cout << "DEBUG : Piece présente en diagonale" << endl;
 					if(e->getPiece(x,y)->isWhite() != m_white){
-						cout << "DEBUG : Piece mangeable => déplacement ok" << endl;
 						return true;
 					}
 				}
