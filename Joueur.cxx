@@ -1,4 +1,5 @@
 #include <iostream>
+#include <algorithm>
 #include "Joueur.h"
 
 using namespace std;
@@ -21,14 +22,12 @@ Joueur::~Joueur()
 
 void
 Joueur::enleverPiece(Piece* piece){
-	vector<Piece*>::iterator p = m_pieces.begin();
-	while ( p != m_pieces.end() )
-	{
-		if(piece == *p){
-			m_pieces.erase(p);
-		}
-		p++;
-	}
+	//Find new end iterator
+	std::vector<Piece*>::iterator newEnd = std::remove(m_pieces.begin(), m_pieces.end(), piece);
+	//Erase the "removed" elements.
+	m_pieces.erase(newEnd, m_pieces.end());
+	m_pieces.resize(newEnd - m_pieces.begin());
+
 }
 
 Joueur::Joueur(bool white)
@@ -66,9 +65,9 @@ Joueur::isWhite()
 	return m_pieces[0]->isWhite();
 }
 
-vector<Piece*>
+vector<Piece*>*
 Joueur::getPieces(){
-	return m_pieces;
+	return &m_pieces;
 }
 
 

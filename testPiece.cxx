@@ -47,23 +47,25 @@ bool isCoordonneeValide(string text){
 bool isJoueurEnEchec(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	cout<<"DEBUG:debut isJoueurEnEchec"<<endl;
 	bool ret = false;
-	vector<Piece*> findTheKing = joueurToCheck->getPieces();
+	vector<Piece*>* findTheKing = joueurToCheck->getPieces();
 	Piece* roi=NULL;
-	for(vector<Piece*>::size_type i=0;i<findTheKing.size();i++){
-		if(findTheKing[i]->codePiece()==(joueurToCheck->isWhite()?'R':'r')){
-			roi = findTheKing[i];
+	std::vector<Piece*>::iterator it = findTheKing->begin();
+	while(it != findTheKing->end()){
+		if((*it)->codePiece()==(joueurToCheck->isWhite()?'R':'r')){
+			roi = (*it);
 			cout<<"DEBUG:roi trouvé"<<endl<< roi->x() << endl << roi->y() << endl;
 		}
+		it++;
 	}
-	if (roi==NULL){return false;}
-	for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
-		vector<int*> mouvements;
-		if(attaquant->getPieces()[i]->mouvementValide(e, roi->x(), roi->y())){
+	std::vector<Piece*>::iterator it2 = attaquant->getPieces()->begin();
+	while(it2 != attaquant->getPieces()->end()){
+		cout << (*it2)->codePiece() << endl;
+		if((*it2)->mouvementValide(e, roi->x(), roi->y())){
 			cout<<"DEBUG:joueur en echec"<<endl;
 			ret = true;
 		}
+		it2++;
 	}
-	vector<Piece*>().swap(findTheKing);
 	cout<<"DEBUG:fin isJoueurEchec"<<endl;
 	return ret;
 }
@@ -74,31 +76,36 @@ bool isPat(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	{
 		int cpt=0;
 		Piece* roi;
-		for(vector<Piece*>::size_type i=0;i< joueurToCheck->getPieces().size();i++){
-			if(!( joueurToCheck->getPieces()[i]->codePiece()==(joueurToCheck->isWhite()?'R':'r'))){
-				if( joueurToCheck->getPieces()[i]->getMouvementsPossibles(e).size()>0){
+		std::vector<Piece*>::iterator it = joueurToCheck->getPieces()->begin();
+		while(it != joueurToCheck->getPieces()->end()){
+			if(!((*it)->codePiece()==(joueurToCheck->isWhite()?'R':'r'))){
+				if((*it)->getMouvementsPossibles(e).size()>0){
 					cout<<"DEBUG:mouvment possible autre rois"<<endl;
 					ret=false;
 				}
 			}else{
-				roi = joueurToCheck->getPieces()[i];
+				roi = (*it);
 			}
+			it++;
 		}
 		if(ret==true){
 			vector<int*> posRoi=roi->getMouvementsPossibles(e);
-			for(vector<int*>::size_type k=0; k<posRoi.size();k++){
-				cout<<posRoi[k][0]<<endl<<posRoi[k][1]<<endl;
+			std::vector<int*>::iterator it2 = posRoi.begin();
+			while(it2 != posRoi.end()){
+				cout<<(*it2)[0]<<endl<<(*it2)[1]<<endl;
 				bool isEnEchec=false;
-				for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
-					cout<<posRoi[k][0]<<endl<<posRoi[k][1]<<endl;
-					if(attaquant->getPieces()[i]->mouvementValide(e,posRoi[k][0], posRoi[k][1])){
+				std::vector<Piece*>::iterator it3 =attaquant->getPieces()->begin();
+				while(it3 != attaquant->getPieces()->end()){
+					cout<<(*it2)[0]<<endl<<(*it2)[1]<<endl;
+					if((*it3)->mouvementValide(e,(*it2)[0], (*it2)[1])){
 						isEnEchec=true;
 					}
+					it3++;
 				}
 				if(isEnEchec){cpt++;}
+				it2++;
 			}
 			ret=(cpt==posRoi.size());
-			vector<int*>().swap(posRoi);
 		}
 	}
 	else{
@@ -111,54 +118,66 @@ bool isPat(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 bool isJoueurMAT(Joueur* joueurToCheck,Joueur* attaquant, Echiquier* e){
 	bool ret =false;
 	int cpt=0;
-	vector<Piece*> findTheKing = joueurToCheck->getPieces();
+	vector<Piece*>* findTheKing = joueurToCheck->getPieces();
 	Piece* roi;
 	cout<<"DEBUG:debut isJoueurMat"<<endl;
 	if(isJoueurEnEchec(joueurToCheck, attaquant,e))
 	{
-		for(vector<Piece*>::size_type i=0;i<findTheKing.size();i++){
-			if(findTheKing[i]->codePiece()==(joueurToCheck->isWhite()?'R':'r')){
-				roi = findTheKing[i];
+		std::vector<Piece*>::iterator it = findTheKing->begin();
+		while(it != findTheKing->end()){
+			if((*it)->codePiece()==(joueurToCheck->isWhite()?'R':'r')){
+				roi = (*it);
 			}
+			it++;
 		}
 		vector<int*> posRoi=roi->getMouvementsPossibles(e);
-		for(vector<int*>::size_type k=0; k<posRoi.size();k++){
-			cout<<posRoi[k][0]<<endl<<posRoi[k][1]<<endl;
+		std::vector<int*>::iterator it2 = posRoi.begin();
+		cout<<"DEBUG:debut isJoueurMat"<<endl;
+		while(it2 != posRoi.end()){
+			cout<<(*it2)[0]<<endl<<(*it2)[1]<<endl;
 			bool isEnEchec=false;
-			for(vector<Piece*>::size_type i=0;i<attaquant->getPieces().size();i++){
-				cout<<posRoi[k][0]<<endl<<posRoi[k][1]<<endl;
-				if(attaquant->getPieces()[i]->mouvementValide(e,posRoi[k][0], posRoi[k][1])){
+			std::vector<Piece*>::iterator it3 = attaquant->getPieces()->begin();
+			while(it3 != attaquant->getPieces()->end()){
+				cout<<(*it2)[0]<<endl<<(*it2)[1]<<endl;
+				if((*it3)->mouvementValide(e,(*it2)[0],(*it2)[1])){
 					isEnEchec=true;
-					for(vector<Piece*>::size_type j=0;j<findTheKing.size();j++){
-						if (findTheKing[j]->mouvementValide(e,attaquant->getPieces()[i]->x(), attaquant->getPieces()[i]->y())){
+					std::vector<Piece*>::iterator it4 = findTheKing->begin();
+					while(it4 != findTheKing->end()){
+						if ((*it4)->mouvementValide(e,(*it3)->x(), (*it3)->y())){
 							isEnEchec=false;
 							cout<<"mangeable"<<endl;
 						}
+						it4++;
 					}
 				}
+				it3++;
 			}
 			if(isEnEchec){cpt++;}
+			it2++;
 		}
+		cout<<"DEBUG:debut isJoueurMat"<<endl;
 		bool interupt = false;
-		for(vector<Piece*>::size_type j=0;j<joueurToCheck->getPieces().size();j++){
-			vector<int*> mouvements= joueurToCheck->getPieces()[j]->getMouvementsPossibles(e);
-			for(vector<int*>::size_type l=0;l<mouvements.size();l++){
-				int origX = joueurToCheck->getPieces()[j]->x();
-				int origY = joueurToCheck->getPieces()[j]->y();
-				e->deplacer(joueurToCheck->getPieces()[j], mouvements[l][0], mouvements[l][1]);
+		std::vector<Piece*>::iterator it5 = joueurToCheck->getPieces()->begin();
+		while(it5 != joueurToCheck->getPieces()->end()){
+			vector<int*> mouvements= (*it5)->getMouvementsPossibles(e);
+			std::vector<int*>::iterator it6 = mouvements.begin();
+			while(it6 != mouvements.end()){
+				int origX = (*it5)->x();
+				int origY = (*it5)->y();
+				e->deplacer((*it5), (*it6)[0], (*it6)[1]);
 				if(!isJoueurEnEchec(joueurToCheck, attaquant, e)){
 					interupt = true;
-					cout << "iterruption possible" << endl << origX << origY << endl << mouvements[l][0] << mouvements[l][1] << endl;
+					cout << "iterruption possible" << endl << origX << origY << endl << (*it6)[0] << (*it6)[1] << endl;
 				}
-				e->deplacer(joueurToCheck->getPieces()[j],origX, origY);
+				e->deplacer((*it5),origX, origY);
+				it6++;
 			}
-			vector<int*>().swap(mouvements);
+			it5++;
 		}
+		cout<<"DEBUG:debut isJoueurMat"<<endl;
 		cout<<cpt<<endl<<roi->getMouvementsPossibles(e).size()<<endl;
 		ret=(cpt==posRoi.size() && !interupt);
-		vector<int*>().swap(posRoi);
 	}
-	vector<Piece*>().swap(findTheKing);
 	return ret;
 }
 void
